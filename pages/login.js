@@ -4,6 +4,8 @@ import { Form, Input, Button, notification } from 'antd';
 import { setLogged } from 'store/slices/user/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layouts/MainLayout';
+import Router from 'next/router';
+
 
 const openNotification = ({msg, description}) => {
   const args = {
@@ -42,12 +44,11 @@ const login = () => {
       if (error) throw error
       dispatch(setLogged({  logged: isLogged, token: newToken, username: newUser.username }));
       console.log("response:", json);
-      //TODO: REDIRIGIR A HOME
+      Router.push("./");
     }catch(er){
       console.log({er})
       openNotification({msg: "Error", description: er});
-      setUser(initialUser);
-      //TODO: setear los inputs a ''
+      document.getElementById("login-form").reset();
     }
   };
 
@@ -58,7 +59,9 @@ const login = () => {
     <MainLayout>
       {/* <div className="login-component"> */}
     <Form
-      name="basic"
+      className="login-component"
+      name="login"
+      id="login-form"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
