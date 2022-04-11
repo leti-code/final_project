@@ -1,7 +1,5 @@
-//import User from '@models/User'
-import User from '../../../models/User'
-//import db from '@lib/dbConnect'
-import db from '../../../lib/dbConnect'
+import User from '@models/User'
+import db from '@lib/dbConnect'
 
 export default async function (req, res) {
     switch (req.method) {
@@ -10,17 +8,25 @@ export default async function (req, res) {
                 await db();
                 const {username, password} = req.body;
                 const user = await User.findOne({username})
-                console.log(user)
-                if(user.checkPassword(password)) 
+                if (!user) {
+                    return res.status(404).json({
+                        success: false,
+                        error: "User is not registered."
+                    });
+                }
+
+                console.log(user, username, password)
+                if(await user.checkPassword(password) === true) {
                     return res.status(200).json({
                         success: true,
-                        logged: true
+                        logged: true,
+                        user,
+                        token: user.generateToken(user._id)
                     })
-                
-                //TODO generar JWT
-                return res.status(200).json({
-                    success: true,
-                    logged: false
+                }
+                return res.status(401).json({
+                    success: false,
+                    error: "Credentials are wrong"
                 });
             }catch(er){
                 console.error(er);
@@ -28,7 +34,7 @@ export default async function (req, res) {
                     success: false,
                     error: er
                 })
-            } //TODO revisar estado
+            }
         default:
             return res.status(405).json({
                 success: false,

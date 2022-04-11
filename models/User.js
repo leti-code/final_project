@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
 
-/* UserSchema will correspond to a collection in your MongoDB database. */
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -15,21 +15,24 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    //TOFIX: no coge que el mail sea unique
     unique: [true, 'This email already has an account. Provide another email'],
     required: [true, 'Please provida an email']
   },
   img: {
-    type: /*imagen */ String
+    type: String
   },
   active_games: {
-    type: /*array */ []
+    type: Array
   },
+  /*  active_games: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Game'
+  }] */
   actual_flag: {
-    type: /*array*/Array
+    type: Array
   },
   scores : {
-    type: /*array */ Array
+    type: Array
   }
   //the index in the last three fields makes a correspondency between the game, flag and score
   //in that way if you go to a concrete game (active_games[0]) 
@@ -49,6 +52,16 @@ UserSchema.pre("save", async function (next){
   console.log(this.password);
   return next();
 });
+
+
+//NEW CODE
+UserSchema.methods.generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '1d'
+  });
+}
+
+//END OF NEW CODE
 
 
 export default mongoose.models.User || mongoose.model('User', UserSchema)

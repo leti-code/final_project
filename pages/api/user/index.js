@@ -9,7 +9,7 @@ export default async function userController(req, res) {
             return res.status(200).json({
                 success: true,
                 connected: true,
-                users
+                users,
             })
         case "POST":
             try{
@@ -19,8 +19,8 @@ export default async function userController(req, res) {
                 await user.save();
                 return res.status(201).json({
                     success: true,
-                    reload: true,
-                    user
+                    user,
+                    token: user.generateToken(user._id)
                 });
             }catch(er){
                 console.error(er);
