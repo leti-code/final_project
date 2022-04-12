@@ -1,0 +1,22 @@
+@import './colors.scss';
+
+.headerComponent{
+    background-color: $primary-color;
+    .avatar{
+        align-self: left;
+    }
+    .logButton {
+        //font: red;
+        //background-color: black;
+        // color: #fff;
+        // border: none;
+        // padding: 10px;
+        // text-align: center;
+        // text-decoration: none;
+        // display: inline-block;
+        // font-size: 16px;
+        // margin: 4px 2px;
+        // cursor: pointer;
+        // border-radius: 5px;
+    }
+}

@@ -1,23 +1,17 @@
 import {React,useState } from 'react';
-import { Form, Input, Button, notification } from 'antd';
-// import '../styles/login.scss';
+import { Form, Input, Button} from 'antd';
+import styles from '../styles/login.module.scss';
 import { setLogged } from 'store/slices/user/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layouts/MainLayout';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
+import openNotification from 'components/common/notification';
+import { useForm } from 'antd/lib/form/Form';
 
-
-const openNotification = ({msg, description}) => {
-  const args = {
-    message: msg,
-    description,
-    duration: 0,
-  };
-  notification.open(args);
-};
 
 const login = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const {logged, token, username} = useSelector(state => state.user);
 
   const initialUser = {
@@ -26,7 +20,7 @@ const login = () => {
   };
 
   const [ user, setUser] = useState(initialUser);
-
+  const [form] = useForm();
   const onFinish = async () => {
     try{
       const res = await fetch('/api/user/login', {
@@ -44,11 +38,14 @@ const login = () => {
       if (error) throw error
       dispatch(setLogged({  logged: isLogged, token: newToken, username: newUser.username }));
       console.log("response:", json);
-      Router.push("./");
+      openNotification({msg: "Welcome", description: "You have been logged in"});
+
+      router.push("./");
     }catch(er){
       console.log({er})
       openNotification({msg: "Error", description: er});
-      document.getElementById("login-form").reset();
+      setUser(initialUser);
+      form.resetFields();
     }
   };
 
@@ -57,22 +54,18 @@ const login = () => {
   };
   return (
     <MainLayout>
-      {/* <div className="login-component"> */}
     <Form
-      className="login-component"
-      name="login"
+      form={form}
+      className={styles.loginComponent}
       id="login-form"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
       method='POST'
     >
       <Form.Item
         label="Username"
         name="username"
+        value={user.username}
         onChange={(e)=>setUser({
           ...user,
           username: e.target.value
@@ -85,6 +78,7 @@ const login = () => {
       <Form.Item
         label="Password"
         name="password"
+        value={user.password}
         onChange={(e)=>setUser({
           ...user,
           password: e.target.value
@@ -99,7 +93,6 @@ const login = () => {
         </Button>
       </Form.Item>
       </Form>
-      {/* </div> */}
     </MainLayout>
   )
 }

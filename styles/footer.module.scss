@@ -1,0 +1,11 @@
+@import './colors.scss';
+
+.footerComponent {
+    background-color: $secondary-color;
+    opacity: 0.6;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
