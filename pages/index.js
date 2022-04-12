@@ -4,6 +4,7 @@ import MainLayout from "layouts/MainLayout"
 const Index = () => {
   const prueba = async (e) => {
     console.log("click....");
+    console.log(process.env.MONGODB_URI_DEV);
     e.preventDefault();
     const res = await fetch('/api/user/', {
       method: 'GET',
