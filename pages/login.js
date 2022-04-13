@@ -35,7 +35,7 @@ const login = () => {
       })
       const json = await res.json();
       const {user: newUser, token: newToken, logged: isLogged, error} = json;
-      if (error) throw error
+      if (error) throw error;
       dispatch(setLogged({  logged: isLogged, token: newToken, username: newUser.username }));
       console.log("response:", json);
       openNotification({msg: "Welcome", description: "You have been logged in"});
@@ -57,7 +57,6 @@ const login = () => {
     <Form
       form={form}
       className={styles.loginComponent}
-      id="login-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       method='POST'

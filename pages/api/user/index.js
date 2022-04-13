@@ -24,11 +24,12 @@ export default async function userController(req, res) {
                 });
             }catch(er){
                 console.error(er);
-                return res.status(500).json({
+                const fieldFailed = Object.keys(er.keyValue)[0]; 
+                return res.status(401).json({
                     success: false,
-                    error: er.message
+                    error: `There is another user with the same ${fieldFailed}, please change it`
                 })
-            } //TODO revisar estado
+            }
         default:
             return res.status(405).json({
                 success: false,

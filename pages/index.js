@@ -1,8 +1,9 @@
-import React from 'react';
-import MainLayout from "layouts/MainLayout"
+//import React from 'react';
+import MainLayout from "layouts/MainLayout";
+import {useRouter} from 'next/router';
 
 const Index = () => {
-  const prueba = async (e) => {
+  /*const prueba = async (e) => {
     console.log("click....");
     console.log(process.env.MONGODB_URI_DEV);
     e.preventDefault();
@@ -16,12 +17,15 @@ const Index = () => {
       const json = await res.json();
 
       console.log(json);
-  };
+  };*/
 
+  const router = useRouter();
   return(
     <MainLayout>
     INDEX
-    <button onClick={(e)=>prueba(e)}>prueba</button>
+    <button onClick={()=>{
+      router.push('/register');
+    }}>Ve al registro</button>
     </MainLayout>
   );
 } 
