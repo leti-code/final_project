@@ -7,8 +7,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import styles from '../styles/register.module.scss';
 import openNotification from '@components/common/notification';
 
-
 const register = () => {
+  const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
+  console.log(url);
   const router = useRouter();
 
     /*Stuff of ant design styles for form */
@@ -47,8 +48,21 @@ const register = () => {
     const [form] = useForm();
   
     const onFinish = async () => {
-      /*TODO: connect with cloudinary api to upload and get the path */
       try{
+         const formData = new FormData();
+         formData.append('file', user.img);
+         formData.append("upload_preset", "user_image");
+         formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_KEY);
+
+
+        const response = await fetch(url, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+        const {secure_url} = data;
+
         const res = await fetch('/api/user', {
           method: 'POST',
           headers: {
@@ -58,7 +72,7 @@ const register = () => {
               username: user.username,
               password: user.password,
               email: user.email,
-              img: user.img
+              img: secure_url
             }),
         })
         const json = await res.json();
@@ -76,7 +90,8 @@ const register = () => {
     return (
       
       <MainLayout>
-        
+      <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript">  
+      </script>
       <Form
         {...formItemLayout}
         form={form}
@@ -166,12 +181,21 @@ const register = () => {
           value={user.img}
           onChange={(e)=>setUser({
             ...user,
-            img: e.target.value
+            img: e.target.files[0]
+            
           })}
           extra="Select your profile picture"
         >
-          <Upload name="logo" action="/upload.do" listType="picture" maxCount={1}>
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          <label>Elige imagen</label>
+          <Upload/>
+          <Upload 
+            name="logo" 
+            listType="picture" 
+            maxCount={1} 
+            accept=".jpg, .png, .jpeg"
+
+            >
+              <Button icon={<UploadOutlined />}>Click to upload</Button>
           </Upload>
       </Form.Item>
 
