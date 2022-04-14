@@ -11,14 +11,18 @@ const MapSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a description.']
     },
-    img: {
-        type: String
+    firstClue: {
+        type: String,
+        required: [true, 'Please provide a first clue to begin the game.']
     },
     /*check: flag is correct? */
     flags: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Flag'
-    }]
+    }],
+    img: {
+        type: String
+    }
     /*enhacement: dificultad, idioma, categoría */
 });
 
