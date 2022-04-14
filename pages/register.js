@@ -6,6 +6,7 @@ import MainLayout from 'layouts/MainLayout';
 import { UploadOutlined } from '@ant-design/icons';
 import styles from '../styles/register.module.scss';
 import openNotification from '@components/common/notification';
+import Modal_window from '@components/common/modal';
 
 const register = () => {
   const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
@@ -210,6 +211,12 @@ const register = () => {
         <Checkbox>
         I have read the <a target="_blank" href="./termsConditions">agreement</a>
         </Checkbox>
+
+        <Modal_window
+          butText="Agreement"
+          title="Terms and Conditions"
+          content="Aquí iría toda la info"
+        />
       </Form.Item>
 
 
