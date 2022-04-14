@@ -40,37 +40,8 @@ const Header = () => {
         <Button type="text" icon={<MenuOutlined  style={{ fontSize: 20 }} />} />
     </Dropdown>
     );
-    // return (
-    //     <header className={styles.headerComponent}>
-    //         <div>
-    //         <DropdownMenu key="more" />
-    //         {/*TODO: create a home icon that redirects into index*/} 
-    //         <Avatar
-    //             className={styles.avatar}
-    //             size={80}
-    //             src="https://res.cloudinary.com/bybsite/image/upload/v1649782019/happyBrain_xzsmkl.png"
-    // />
-    //             <strong>Break your Brain</strong>
-    //         <Button 
-
-    //         className={styles.logButton}
-    //         onClick={() => {
-    //             if(logged === true) {
-    //                 dispatch(setLogged({  logged: false, token: '', username: '' }));
-    //                 /*TODO: confirmation window (?) */
-    //                 openNotification({msg: "See you", description: "You have been logged out"});
-    //             } else 
-    //             router.push('/login')
-    //         }}
-    //         >
-    //             {logged ? "Logout" : "Login"}
-    //         </Button>
-    //         </div>
-    //     </header>
-    // );
-
     
-        return (
+    return (
     <PageHeader
         // avatar={{
             //icon: <UserOutlined />
@@ -84,7 +55,9 @@ const Header = () => {
         //title="Break your Brain"
         className={styles.headerComponent}
         extra={[
-        <Image src="https://res.cloudinary.com/bybsite/image/upload/v1649782019/happyBrain_xzsmkl.png"
+        <DropdownMenu key="more" />,
+        <Image 
+            src="/happyBrain.png"
             alt="ByB"
             width={64}
             height={64}
@@ -103,9 +76,7 @@ const Header = () => {
         >
             {logged ? "Logout" : "Login"}
         </Button>,
-        <DropdownMenu key="more" />,
         ]}
-        //avatar={{ src: './../imgs/happyBrain.jpg' }}
     >
     </PageHeader>
     );
