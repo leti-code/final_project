@@ -4,7 +4,7 @@ const openNotification = ({msg, description}) => {
   const args = {
     message: msg,
     description,
-    duration: 0,
+    duration: 5.5,
   };
   notification.open(args);
 };

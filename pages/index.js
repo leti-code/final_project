@@ -1,4 +1,5 @@
 //import React from 'react';
+import { Button } from "antd";
 import MainLayout from "layouts/MainLayout";
 import {useRouter} from 'next/router';
 
@@ -23,9 +24,9 @@ const Index = () => {
   return(
     <MainLayout>
     INDEX
-    <button onClick={()=>{
+    <Button onClick={()=>{
       router.push('/register');
-    }}>Ve al registro</button>
+    }}>Ve al registro</Button>
     </MainLayout>
   );
 } 

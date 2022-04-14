@@ -1,6 +1,6 @@
 import {React,useState } from 'react';
 import {useRouter} from 'next/router';
-import { Form, Input, Button, Checkbox, Upload } from 'antd';
+import { Form, Input, Button, Checkbox, Upload} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import MainLayout from 'layouts/MainLayout';
 import { UploadOutlined } from '@ant-design/icons';
@@ -46,7 +46,7 @@ const register = () => {
   
     const [ user, setUser] = useState(initialUser);
     const [form] = useForm();
-  
+        
     const onFinish = async () => {
       try{
          const formData = new FormData();
@@ -90,8 +90,6 @@ const register = () => {
     return (
       
       <MainLayout>
-      <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript">  
-      </script>
       <Form
         {...formItemLayout}
         form={form}
@@ -186,7 +184,6 @@ const register = () => {
           })}
           extra="Select your profile picture"
         >
-          <label>Elige imagen</label>
           <Upload/>
           <Upload 
             name="logo" 
@@ -211,8 +208,7 @@ const register = () => {
         {...tailFormItemLayout}
       >
         <Checkbox>
-          I have read the <a href="">agreement</a>
-          {/*TODO: link with an agreement (pop up that informs) */}
+        I have read the <a target="_blank" href="./termsConditions">agreement</a>
         </Checkbox>
       </Form.Item>
 
