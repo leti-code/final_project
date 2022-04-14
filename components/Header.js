@@ -1,5 +1,5 @@
-import { PageHeader, Menu, Dropdown, Button, Avatar } from 'antd';
-import { MenuOutlined, UserOutlined } from '@ant-design/icons';
+import { PageHeader, Menu, Dropdown, Button } from 'antd';
+import { MenuOutlined, HomeFilled,UserOutlined } from '@ant-design/icons';
 import styles from '../styles/header.module.scss';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
@@ -28,8 +28,8 @@ const Header = () => {
         </a>
         </Menu.Item>
         <Menu.Item>
-        <a rel="noopener noreferrer" href="">
-            Whatever
+        <a href="/register">
+            Register new User
         </a>
         </Menu.Item>
     </Menu>
@@ -55,7 +55,8 @@ const Header = () => {
         //title="Break your Brain"
         className={styles.headerComponent}
         extra={[
-        <DropdownMenu key="more" />,
+        <Button type="text" href="/" icon={<HomeFilled   style={{ fontSize: 20 }} />} />,
+        <DropdownMenu key="more" className={styles.dropDownMenu} />,
         <Image 
             src="/happyBrain.png"
             alt="ByB"
