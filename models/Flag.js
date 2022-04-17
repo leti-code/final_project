@@ -22,7 +22,7 @@ const FlagSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please provide the score of this flag.']
     },
-    clue: {
+    clueToNextFlag: {
         type: String,
         required: [true, 'Please provide a clue to catch next flag or to finish the game.']
     },
