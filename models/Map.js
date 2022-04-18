@@ -15,12 +15,16 @@ const MapSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a first clue to begin the game.']
     },
-    /*check: flag is correct? 
-    where I should put that is a required field?*/
     flags: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Flag'
+        ref: 'Flag',
+        required: [true, 'Please provide at least a flag.']
     }],
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide an owner.']
+    },
     img: {
         type: String
     }
