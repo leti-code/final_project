@@ -6,6 +6,7 @@ import {useRouter} from 'next/router';
 import { setLogged } from 'store/slices/user/user.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import openNotification from './common/notification';
+import Link from 'next/link';
 
 
 
@@ -18,19 +19,24 @@ const Header = () => {
     const menu = (
     <Menu>
         <Menu.Item>
-        <a rel="noopener noreferrer" href="">
-            See profile
-        </a>
+        <Link href="/profile">
+        <a>See my profile</a>
+        </Link>
         </Menu.Item>
         <Menu.Item>
-        <a rel="noopener noreferrer" href="">
-            Games
-        </a>
+        <Link href="/createMap">
+        <a>Create a new game</a>
+        </Link>
         </Menu.Item>
         <Menu.Item>
-        <a href="/register">
-            Register new User
-        </a>
+        <Link href="">
+        <a>Games</a>
+        </Link>
+        </Menu.Item>
+        <Menu.Item>
+        <Link href="/register">
+        <a>Register new User</a>
+        </Link>
         </Menu.Item>
     </Menu>
     );
@@ -60,8 +66,8 @@ const Header = () => {
         <Image 
             src="/happyBrain.png"
             alt="ByB"
-            width={64}
-            height={64}
+            width={80}
+            height={80}
         />,
         <h1>Break your Brain</h1>,
         <Button 
