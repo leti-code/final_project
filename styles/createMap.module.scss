@@ -1,0 +1,18 @@
+.createMapComponent {
+    overflow: hiden; //check if this works
+    position: fixed;
+    margin-top: 5%;
+    margin-left: 15%;
+    width: 60%;
+
+    // .flagsList {
+    //     // display: flex;
+    //     // margin-left: 100px;
+    //     // overflow: auto;
+    // }
+}
+
+.flagsList {
+    width: 100%;
+}
+//refactor into more general styles (in app)
