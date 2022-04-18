@@ -14,6 +14,7 @@ export const userSlice = createSlice({
             state.logged = action.payload.logged;
             state.token = action.payload.token;
             state.username = action.payload.username;
+            window.localStorage.setItem("byb_token", action.payload.token);
         }
     }
 });
