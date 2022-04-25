@@ -21,13 +21,10 @@ const UserSchema = new mongoose.Schema({
   img: {
     type: String
   },
-  active_maps: {
-    type: Array
-  },
-  /*  active_games: [{
+  active_maps: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Game'
-  }] */
+    ref: 'Map'
+  }],
   actual_flag: {
     type: Array
   },
