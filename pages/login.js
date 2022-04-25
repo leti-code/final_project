@@ -7,6 +7,7 @@ import MainLayout from 'layouts/MainLayout';
 import {useRouter} from 'next/router';
 import openNotification from 'components/common/notification';
 import { useForm } from 'antd/lib/form/Form';
+import Link from 'next/link';
 
 
 const login = () => {
@@ -21,6 +22,7 @@ const login = () => {
 
   const [ user, setUser] = useState(initialUser);
   const [form] = useForm();
+
   const onFinish = async () => {
     try{
       const res = await fetch('/api/user/login', {
@@ -87,9 +89,13 @@ const login = () => {
         <Input.Password />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" className={styles.submitButton}>
           Submit
         </Button>
+        Not registered? Go to 
+        <Link href="/register">
+        <a> registry</a>
+        </Link>
       </Form.Item>
       </Form>
     </MainLayout>
