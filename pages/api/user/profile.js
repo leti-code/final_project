@@ -15,7 +15,6 @@ const handler = async (req, res) => {
                 error: ["Method not allowed."]
             });
     }
-//}
 }
 
 export default protect(handler);

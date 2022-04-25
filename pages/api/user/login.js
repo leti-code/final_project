@@ -14,8 +14,6 @@ export default async function (req, res) {
                         error: "User is not registered."
                     });
                 }
-
-                console.log(user, username, password)
                 if(await user.checkPassword(password) === true) {
                     return res.status(200).json({
                         success: true,

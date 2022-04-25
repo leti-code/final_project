@@ -1,9 +1,18 @@
 import Map from "@models/Map";
 import Flag from "@models/Flag";
+import User from "@models/User";
 import db from "@lib/dbConnect";
+import owner from "./middleware";
 
-export default async function mapController(req, res) {
+const mapController = async (req,res) => {
     switch (req.method) {
+        case "GET":
+            await db();
+            const maps = await Map.find({}).populate('flags');
+            return res.status(200).json({
+                success: true,
+                maps
+            });
         case "POST":
             try {
                 await db();
@@ -16,12 +25,19 @@ export default async function mapController(req, res) {
                     flagIds.push(singleFlag._id);
                 });
                 req.body.flags = flagIds;
+                req.body.owner = req.userId;
                 const map = new Map(req.body);
                 await map.save();
+
+                const user = await User.findById(req.userId);
+                await user.maps_owned.push(map._id);
+                await user.save();
+
                 return res.status(201).json({
                     flags,
                     success: true,
                     map,
+                    user
                 });
             } catch (er) {
                 console.log(er);
@@ -37,3 +53,5 @@ export default async function mapController(req, res) {
             });
     }
 }
+
+export default owner(mapController);
