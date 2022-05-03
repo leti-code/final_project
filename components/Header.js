@@ -20,17 +20,17 @@ const Header = () => {
     <Menu>
         <Menu.Item>
         <Link href="/profile">
-        <a>See my profile</a>
+        <a>See my Profile</a>
         </Link>
         </Menu.Item>
         <Menu.Item>
         <Link href="/createMap">
-        <a>Create a new game</a>
+        <a>Create a new Map</a>
         </Link>
         </Menu.Item>
         <Menu.Item>
         <Link href="">
-        <a>Games</a>
+        <a>Available Maps</a>
         </Link>
         </Menu.Item>
         <Menu.Item>
@@ -61,21 +61,32 @@ const Header = () => {
         //title="Break your Brain"
         className={styles.headerComponent}
         extra={[
-        <Button type="text" href="/" icon={<HomeFilled   style={{ fontSize: 20 }} />} />,
         <DropdownMenu key="more" className={styles.dropDownMenu} />,
-        <Image 
-            src="/happyBrain.png"
-            alt="ByB"
-            width={80}
-            height={80}
-        />,
+        <Link href="/">
+            <Image 
+                src="/happyBrain.png"
+                alt="ByB"
+                width={80}
+                height={80}
+            />
+        </Link>,
         <h1>Break your Brain</h1>,
         <Button 
 
             className={styles.logButton}
             onClick={() => {
                 if(logged === true) {
-                    dispatch(setLogged({  logged: false, token: '', username: '' }));
+                    dispatch(setLogged({  
+                        logged: false, 
+                        token: '', 
+                        username: '',
+                        email: '',
+                        img: '',
+                        active_maps: [],
+                        actual_flag: [],
+                        scores: [],
+                        maps_owned: []
+                    }));
                     openNotification({msg: "See you", description: "You have been logged out"});
                 } else 
                 router.push('/login')
