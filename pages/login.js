@@ -13,7 +13,7 @@ import Link from 'next/link';
 const login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {logged, token, username} = useSelector(state => state.user);
+  const {logged, token, username, email, img, active_maps, actual_flag, scores, maps_owned} = useSelector(state => state.user);
 
   const initialUser = {
     username: '',
@@ -38,7 +38,17 @@ const login = () => {
       const json = await res.json();
       const {user: newUser, token: newToken, logged: isLogged, error} = json;
       if (error) throw error;
-      dispatch(setLogged({  logged: isLogged, token: newToken, username: newUser.username }));
+      dispatch(setLogged({  
+        logged: isLogged, 
+        token: newToken, 
+        username: newUser.username, 
+        email: newUser.email, 
+        img: newUser.img, 
+        active_maps: newUser.active_maps,
+        actual_flag: newUser.actual_flag, 
+        scores: newUser.scores, 
+        maps_owned: newUser.maps_owned
+      }));
       console.log("response:", json);
       openNotification({msg: "Welcome", description: "You have been logged in"});
 
