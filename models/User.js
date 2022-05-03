@@ -25,9 +25,10 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Map'
   }],
-  actual_flag: {
-    type: Array
-  },
+  actual_flag: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Flag'
+  }],
   scores : [{
     type: Number
   }],
@@ -55,14 +56,10 @@ UserSchema.pre("save", async function (next){
 });
 
 
-//NEW CODE
 UserSchema.methods.generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '1d'
   });
 }
-
-//END OF NEW CODE
-
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);
