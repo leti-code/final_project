@@ -2,9 +2,9 @@ import Map from "@models/Map";
 import Flag from "@models/Flag";
 import User from "@models/User";
 import db from "@lib/dbConnect";
-import owner from "./middleware";
+import protect from "../user/middleware";
 
-const mapController = async (req,res) => {
+const mapController = async (req, res) => {
     switch (req.method) {
         case "GET":
             await db();
@@ -25,11 +25,11 @@ const mapController = async (req,res) => {
                     flagIds.push(singleFlag._id);
                 });
                 req.body.flags = flagIds;
-                req.body.owner = req.userId;
+                req.body.owner = req.user._id;
                 const map = new Map(req.body);
                 await map.save();
 
-                const user = await User.findById(req.userId);
+                const user = await User.findById(req.user._id);
                 await user.maps_owned.push(map._id);
                 await user.save();
 
@@ -54,4 +54,4 @@ const mapController = async (req,res) => {
     }
 }
 
-export default owner(mapController);
+export default protect (mapController);

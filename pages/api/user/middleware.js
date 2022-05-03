@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '@models/User';
+import Map from '@models/Map';
+import Flag from '@models/Flag';
 
 const protect = (handler) => {
     return async (req, res) => {
@@ -11,8 +13,7 @@ const protect = (handler) => {
                 
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-                const currentUser = await User.findById(decoded.id).select('-password');
-               
+                let currentUser = await User.findById(decoded.id).select('-password').populate(['maps_owned', 'actual_flag', 'active_maps']);
                 if (!currentUser) {
                     return res.status(401).json({
                       success: false,
@@ -23,12 +24,10 @@ const protect = (handler) => {
                 req.user = currentUser;
     
                 return handler(req,res);
-                //next();
             } catch (error) {
-                console.log(error);
                 res.status(401).json({
                     success: false,
-                    newError: new Error('Not authorized'),
+                    newError: "Error Not Authorized",
                 });
             }
         }
