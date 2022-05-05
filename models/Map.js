@@ -13,17 +13,16 @@ const MapSchema = new mongoose.Schema({
     },
     firstClue: {
         type: String,
-        required: [true, 'Please provide a first clue to begin the game.']
+        required: [true, 'Please provide a first clue to begin the map.']
     },
     flags: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Flag',
-        required: [true, 'Please provide at least a flag.']
     }],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'Please provide an owner.']
+       required: [true, 'Please provide an owner.']
     },
     img: {
         type: String

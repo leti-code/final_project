@@ -32,8 +32,8 @@ const UserSchema = new mongoose.Schema({
   scores : [{
     type: Number
   }],
-  //the index in the last three fields makes a correspondency between the game, flag and score
-  //in that way if you go to a concrete game (active_games[0]) 
+  //the index in the last three fields makes a correspondency between the map, flag and score
+  //in that way if you go to a concrete map (active_maps[0]) 
   //you can have it score with scores[0] and the actual flags with actual_flag[0]
   maps_owned : [{
     type: mongoose.Schema.Types.ObjectId,

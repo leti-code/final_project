@@ -24,7 +24,7 @@ const FlagSchema = new mongoose.Schema({
     },
     clueToNextFlag: {
         type: String,
-        required: [true, 'Please provide a clue to catch next flag or to finish the game.']
+        required: [true, 'Please provide a clue to catch next flag or to finish the map.']
     },
     img: {
         type: String
