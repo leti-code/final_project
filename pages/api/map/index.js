@@ -16,15 +16,6 @@ const mapController = async (req, res) => {
         case "POST":
             try {
                 await db();
-                const flags = req.body.flags;
-                let flagIds = [];
-
-                flags.forEach(flag => {
-                    const singleFlag = new Flag(flag);
-                    singleFlag.save();
-                    flagIds.push(singleFlag._id);
-                });
-                req.body.flags = flagIds;
                 req.body.owner = req.user._id;
                 const map = new Map(req.body);
                 await map.save();
@@ -34,10 +25,8 @@ const mapController = async (req, res) => {
                 await user.save();
 
                 return res.status(201).json({
-                    flags,
                     success: true,
                     map,
-                    user
                 });
             } catch (er) {
                 console.log(er);

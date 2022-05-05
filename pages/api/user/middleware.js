@@ -27,7 +27,7 @@ const protect = (handler) => {
             } catch (error) {
                 res.status(401).json({
                     success: false,
-                    newError: "Error Not Authorized",
+                    error: "Error Not Authorized",
                 });
             }
         }
