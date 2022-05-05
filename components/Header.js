@@ -63,12 +63,14 @@ const Header = () => {
         extra={[
         <DropdownMenu key="more" className={styles.dropDownMenu} />,
         <Link href="/">
+            <a className={styles.logo}>
             <Image 
                 src="/happyBrain.png"
                 alt="ByB"
                 width={80}
                 height={80}
             />
+            </a>
         </Link>,
         <h1>Break your Brain</h1>,
         <Button 
