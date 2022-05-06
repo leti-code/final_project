@@ -1,5 +1,5 @@
 import { PageHeader, Menu, Dropdown, Button } from 'antd';
-import { MenuOutlined, HomeFilled,UserOutlined } from '@ant-design/icons';
+import { MenuOutlined} from '@ant-design/icons';
 import styles from '../styles/header.module.scss';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
@@ -24,7 +24,7 @@ const Header = () => {
         </Link>
         </Menu.Item>
         <Menu.Item>
-        <Link href="/createMap">
+        <Link href="map/create">
         <a>Create a new Map</a>
         </Link>
         </Menu.Item>

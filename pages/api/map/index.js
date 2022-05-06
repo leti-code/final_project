@@ -6,13 +6,6 @@ import protect from "../user/middleware";
 
 const mapController = async (req, res) => {
     switch (req.method) {
-        case "GET":
-            await db();
-            const maps = await Map.find({}).populate('flags');
-            return res.status(200).json({
-                success: true,
-                maps
-            });
         case "POST":
             try {
                 await db();
