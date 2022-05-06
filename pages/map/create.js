@@ -6,7 +6,7 @@ import { UploadOutlined} from '@ant-design/icons';
 
 import MainLayout from 'layouts/MainLayout';
 
-import styles from '../styles/createMap.module.scss';
+import styles from '../../styles/createMap.module.scss';
 import openNotification from '@components/common/notification';
 import { useSelector } from 'react-redux';
 
