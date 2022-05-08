@@ -4,13 +4,14 @@ import Footer from '../components/Footer';
 import {useDispatch, useSelector} from 'react-redux';
 import { setLogged} from 'store/slices/user/user.slice';
 
-
+/*Main layout component has the structure and style of the main screen display */
 const MainLayout = ({children}) => {
+  /*we use the dispatcher and selector to get/set the value of redux stored of the user */
   const dispatch = useDispatch();
   const {logged, token, username} = useSelector(state => state.user);
 
-  useEffect(async () => {
-    async function getUser(token) {
+  useEffect(async () => { //this function is called when the component is mounted (only once)
+    async function getUser(token) { //this function is called to get the user information from the server passing the token for the middleware authorization
       try {
           const res = await fetch('/api/user/profile', {
               method: 'GET',
@@ -20,15 +21,17 @@ const MainLayout = ({children}) => {
               },
           })
           const user = await res.json();
-          console.log("user:", user);
           return user;
       } catch (er) {
           return ({success: false, user: null});
       }
   };
-    const newToken = window.localStorage.getItem('byb_token');
+    
+    /*Functions below manage that we keep the user state (as logged and to keep th token) even if the page is reload or if we go to another different page */  
+    const newToken = window.localStorage.getItem('byb_token'); //We take from localStorage the token stored
     if (newToken) {
-      const {success, user} = await getUser(newToken);
+      //If we have a token, we check that it is a valid user and if it is, we set the user as logged and also all it's information
+      const {success, user} = await getUser(newToken); 
       if (success === true) {
         dispatch(setLogged({  
           logged: true, 
@@ -42,6 +45,7 @@ const MainLayout = ({children}) => {
           maps_owned: user.maps_owned 
         }));
       } else {
+        //If the token is not valid, we set the user as not logged and all its information as false/null
         dispatch(setLogged({  
           logged: false, 
           token: '', 
@@ -57,6 +61,7 @@ const MainLayout = ({children}) => {
     }  
   }, []);
   
+  /*Rendered component: loads the header, footer and a childern(any of the other components that we want to display between) */
   return (
     <div>
         <Header/>
@@ -66,4 +71,4 @@ const MainLayout = ({children}) => {
   )
 }
 
-export default MainLayout
+export default MainLayout;

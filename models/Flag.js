@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 
+/*Structure of the schema of a Flag (stop in the map).
+It contents different variables with its type and also the required option (to work similar to SQL with some required fields)
+If we make the petition to the service of the database withous any of the required fields, the query will be refused. */
 const FlagSchema = new mongoose.Schema({
-    //qr o position? check what to choose
     qr: {
         type: String,
         required: [true, 'Please provide a QR/url/id.']
