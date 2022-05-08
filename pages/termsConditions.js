@@ -1,7 +1,8 @@
-import { Button } from "antd";
 import MainLayout from "layouts/MainLayout";
 import {useRouter} from 'next/router';
 
+
+/*Component with static elements that displays terms and conditions information */
 const TermsConditions = () => {
   
     const styles = {
