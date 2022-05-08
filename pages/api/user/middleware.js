@@ -4,6 +4,9 @@ import Map from '@models/Map';
 import Flag from '@models/Flag';
 
 const protect = (handler) => {
+    /*This middleware takes the token provide in the header and verify it and also makes a select with the decoded id (we get it from the decodification of
+        the token) to return the concrete user information
+        On fail returns the appropiate status. */
     return async (req, res) => {
         let token;
         if ( req.headers.authorization && req.headers.authorization.startsWith('Bearer')

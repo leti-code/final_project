@@ -2,6 +2,8 @@ import User from '@models/User'
 import db from '@lib/dbConnect'
 
 export default async function (req, res) {
+    /*With this post request we logged the user, decoding the token and checking if the password match with the encripted one saved in the concrete
+    document of the database, we are having the information from the request body (send by the client/front) */
     switch (req.method) {
         case "POST":
             try{

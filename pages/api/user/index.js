@@ -3,14 +3,15 @@ import db from '@lib/dbConnect'
 
 export default async function userController(req, res) {
     switch (req.method) {
-        case "GET":
-            await db();
-            const users = await User.find({});
-            return res.status(200).json({
-                success: true,
-                connected: true,
-                users,
-            })
+        // case "GET":
+        //     await db();
+        //     const users = await User.find({});
+        //     return res.status(200).json({
+        //         success: true,
+        //         connected: true,
+        //         users,
+        //     })
+        /*The post request register a new user, the information is provide from the front (client) throw the body request */
         case "POST":
             try{
                 await db();

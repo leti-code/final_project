@@ -6,11 +6,10 @@ import protect from "../user/middleware";
 
 const listMapController = async (req, res) => {
     switch (req.method) {
+        /*This method without middleware makes a select to the colection of Maps, that allows us to list all the maps already created*/
         case "GET":
             await db();
             const maps = await Map.find({}).populate('flags');
-            console.log(maps);
-            // const ownedMaps = await Map.findById
             return res.status(200).json({
                 success: true,
                 maps
