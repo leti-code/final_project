@@ -14,9 +14,11 @@ const Index = () => {
   const router = useRouter();
   const [cards, setCards] = useState([]);
 
+  /*This is the method that will be executed when the component is mounted*/
   useEffect(async () => {
     async function getMaps() {
       try {
+        /*We make a request to get all the available maps */
         const res = await fetch("/api/map/list", {
           method: "GET",
           headers: {
@@ -24,14 +26,12 @@ const Index = () => {
           },
         });
         const maps = await res.json();
-        console.log(maps);
         return maps;
       }catch(er) {
         return({success: false, maps: null});
       }
     };
     const {success, maps} = await getMaps();
-    console.log("Los mapas son:", maps);
     if(success === true)
       setCards(maps);
     else 
@@ -42,11 +42,14 @@ const Index = () => {
     <MainLayout>
 
       {/*TODO: little description of the app */}
-      <h1>Welcome to ByB!</h1>
+    <Divider orientation='="left'>Welcome to ByB!</Divider>
 
     <Divider orientation="left">See our maps and play</Divider>
+
+    {/*We use the Row and Col components from ant design to display the map cards in a grid*/}
     <Row gutter={[6,32]} >
     {
+      /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
       cards.map(card => (
         <Col className="gutter-row" span={8}>
         <Card

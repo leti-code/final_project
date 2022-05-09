@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/router';
 import Image from 'next/image';
 
-
 import { Avatar, Card, Divider, Table, Row, Col } from 'antd';
 import { EditOutlined, SettingOutlined, EditTwoTone } from '@ant-design/icons';
 
@@ -25,6 +24,7 @@ const Profile = () => {
     useEffect(async () => {
         async function getUser(token) {
             try {
+                /*We take the user information from the database with a request to the server side */
                 const res = await fetch('/api/user/profile', {
                     method: 'GET',
                     headers: {
@@ -38,10 +38,13 @@ const Profile = () => {
                 return ({success: false, user: null});
             }
         };
+
+        /*Functions below manage that we keep the user state (as logged and to keep th token) even if the page is reload or if we go to another different page */  
         const newToken = window.localStorage.getItem("byb_token");
         if(logged){
             setUserInfo({username, email, img, active_maps, actual_flag, scores, maps_owned});
         }
+        //If we have a token, we check that it is a valid user and if it is, we set the user as logged and also all it's information  
         else if (newToken) {
             const {success, user} = await getUser(newToken);
             if (success === true) {
@@ -73,6 +76,7 @@ const Profile = () => {
         } 
     }, []);
 
+    /*This variable has the structure of tha table of the active maps (the games the user has already started playing) */
     const columns = [
         {
           title: 'Map',
@@ -92,6 +96,7 @@ const Profile = () => {
         },
       ];
     
+      /*Here we create the table (is a component from Ant Design) */
     const tableData = [];
     if(userInfo){
         for (let i = 0; i < userInfo.active_maps.length; i++) {
@@ -104,6 +109,7 @@ const Profile = () => {
         }
     };
 
+    /*Rendered component*/
     return (
         <MainLayout>
             {
@@ -117,12 +123,14 @@ const Profile = () => {
                     <Avatar size="small" icon={<EditTwoTone/>} />
                     </div>
 
+                    {/*We can add pagination to our table to display only a few rows*/}
                     <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 3 }} />
 
 
                     <Divider orientation="left">Your created maps</Divider>
                     <Row gutter={[6,32]} >
                     {
+                        //here we display the maps the user has created same as we do with the available maps in home page
                     userInfo.maps_owned.map(card => (
                         <Col className="gutter-row" span={8}>
                         <Card

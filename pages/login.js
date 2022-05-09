@@ -36,6 +36,7 @@ const login = () => {
           }),
       })
       const json = await res.json();
+      /*If the response of the request is an user and also its token, we set the dispatcher */
       const {user: newUser, token: newToken, logged: isLogged, error} = json;
       if (error) throw error;
       dispatch(setLogged({  
@@ -49,13 +50,14 @@ const login = () => {
         scores: newUser.scores, 
         maps_owned: newUser.maps_owned
       }));
-      console.log("response:", json);
       openNotification({msg: "Welcome", description: "You have been logged in"});
 
+      //We redirect the user to the home page
       router.push("./");
     }catch(er){
       console.log({er})
       openNotification({msg: "Error", description: er});
+      /*If something goes wrong in the login, we set the user to null (no logged) */
       setUser(initialUser);
       form.resetFields();
     }
@@ -64,6 +66,8 @@ const login = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  /*Rendered component */
   return (
     <MainLayout>
     <Form

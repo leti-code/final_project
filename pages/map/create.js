@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 
 
 const createMap = () => {
-    //TODO: posibility of put this url as an env variable
+    //TOENHACE: posibility of put this url as an env variable
     const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
     const router = useRouter();
       const {/*logged, */token} = useSelector(state => state.user);
@@ -64,15 +64,16 @@ const createMap = () => {
       
 
       const onFinish = async () => {
-          console.log(map);
+        /*Function call when we submit the form */
           try{
             if (map.img) {
+               /*First of all, we prepare the image to be upload to cloudinary (for security reasons we can't get directly the path of the upload file) */
                 const formData = new FormData();
                 formData.append('file', map.img);
                 formData.append("upload_preset", "map_image");
                 formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_KEY);
        
-       
+               /*Then we make the petition to the cloudinary services to upload the image*/
                const response = await fetch(url, {
                  method: "POST",
                  body: formData
@@ -80,9 +81,10 @@ const createMap = () => {
        
                const data = await response.json();
                const {secure_url} = data;    
-               map.img = secure_url;
+               map.img = secure_url; //here we have the url of the image uploaded to cloudinary to keep it in our database
             }
             
+          /*Then we make the petition to the backend to create the map*/
            const res = await fetch('/api/map', {
              method: 'POST',
              headers: {
@@ -100,17 +102,18 @@ const createMap = () => {
            console.log(json);
            const {error} = json;
            if (error) throw error;
-           console.log("response:", json);
            openNotification({msg: "Success!", description: "Your map has been created. Now create some flags!"});
-           router.push("./"); //go to createFlag
+           router.push("./"); //TODO: go to createFlag
          }catch(er){
            console.log({er})
            openNotification({msg: "Error", description: er});
          }
       };
 
+    /*Rendered component */
       return (
           <MainLayout>
+         {/*We use the Form component from ant design, with some items and properties (as the onFinish method) */}
             <Form
             {...formItemLayout}
             form={form}
@@ -142,6 +145,8 @@ const createMap = () => {
                 label="Map picture"
                 value={map.img}
                 onChange={(e)=>setMap({
+                  /*This method is called when the content of the input is changed,
+                  we use the spread operator to set the new value of the map with all the old ones and the concrete new one for which we take the value of the input*/
                     ...map,
                     img: e.target.files[0]
                     
