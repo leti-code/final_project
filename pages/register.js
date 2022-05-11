@@ -1,4 +1,4 @@
-import {React,useState } from 'react';
+import {useState } from 'react';
 import {useRouter} from 'next/router';
 import { Form, Input, Button, Checkbox, Upload} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
@@ -6,7 +6,6 @@ import MainLayout from 'layouts/MainLayout';
 import { UploadOutlined } from '@ant-design/icons';
 import styles from '../styles/register.module.scss';
 import openNotification from '@components/common/notification';
-// import Modal_window from '@components/common/modal';
 
 const register = () => {
   const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload"; //public url to make the petition to the cloudinary services
@@ -65,6 +64,7 @@ const register = () => {
 
         const data = await response.json();
         const {secure_url} = data;  //here we have the url of the image uploaded to cloudinary to keep it in our database
+        user.img = secure_url;
 
         /*Then we make the petition to the backend to create the user*/
         const res = await fetch('/api/user', {
@@ -76,7 +76,7 @@ const register = () => {
               username: user.username,
               password: user.password,
               email: user.email,
-              img: secure_url
+              img: user.img
             }),
         })
         const json = await res.json();
@@ -220,15 +220,7 @@ const register = () => {
         <Checkbox>
         I have read the <a target="_blank" href="./termsConditions">agreement</a>
         </Checkbox>
-
-        {/*example of modal use
-         <Modal_window
-          butText="Agreement"
-          title="Terms and Conditions"
-          content="Aquí iría toda la info"
-        /> */}
       </Form.Item>
-
 
         {/*Submit button */}
         <Form.Item {...tailFormItemLayout}>
