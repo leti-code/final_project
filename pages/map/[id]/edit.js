@@ -1,0 +1,195 @@
+import openNotification from "@components/common/notification";
+import {Form, Input, Button, Spin, Divider, Empty, Avatar} from 'antd';
+import { LoadingOutlined, EditTwoTone } from '@ant-design/icons';
+import { useForm } from 'antd/lib/form/Form';
+import Image from 'next/image';
+
+
+
+import { useEffect, useState } from "react";
+import {useRouter} from 'next/router';
+import MainLayout from "layouts/MainLayout";
+import styles from '../../../styles/editMap.module.scss';
+import Modal_flag_creation_window from "@components/common/modalFlagForm";
+
+
+
+export async function getServerSideProps(context) {
+    const { id } = context.params;
+    
+    return {
+      props: {id}, // will be passed to the page component as props
+    }
+  };
+
+const edit = ({id}) => {
+    const [mapInfo, setMapInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasValuesChanged, setHasValuesChanged] = useState(false);
+    const router = useRouter();
+    const [form] = useForm();
+
+
+    /*Stuff of ant design styles for form */
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 16,
+          offset: 8,
+        },
+      },
+    };
+    /*End*/
+
+    const onFinish = async () => {
+      console.log("The new values", mapInfo);
+    };
+
+    const handleAddFlag = () => {
+      console.log("I'm creating a flag...");
+    };
+
+    useEffect(() => {
+        async function getMap(token) {
+            try {
+                setIsLoading(true);
+                const res = await fetch(`/api/map/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                })
+                const {map} = await res.json();
+                setMapInfo(map);
+                setIsLoading(false);
+            } catch (er) {
+                openNotification({msg: "Error", description: "This map is not available"});
+                router.push("/");
+            }
+        };
+        const newToken = window.localStorage.getItem("byb_token");
+        getMap(newToken);
+    }, []);
+  return (
+    <MainLayout>
+      {isLoading ? 
+      <div className={styles.loading}>
+      <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
+      </div> 
+      : 
+      <>
+      <Divider orientation="left">Map page</Divider>
+      <p>Here you can find the full information provided to your map. You can also edit it and add new flags.</p>
+      {mapInfo ?
+      <Form
+        {...formItemLayout}
+        form={form}
+        className={styles.editMapComponent}
+            onFinish={onFinish}
+            method='POST'
+            scrollToFirstError
+            >
+            <div className={styles.mapImage}>
+              <Avatar size={250} shape="square" src={mapInfo.img ? mapInfo.img : "/defaultMap.jpg"}/>
+              <Avatar size="small" icon={<EditTwoTone/>} />
+            </div>
+            <Form.Item
+              label="Name"
+              name="mapname"
+              value={mapInfo.mapname}
+              initialValue={mapInfo.mapname}
+              tooltip="What name do you want for your map?"
+                onChange={(e)=>{
+                  setMapInfo({
+                    ...mapInfo,
+                    mapname: e.target.value
+                  });
+                  setHasValuesChanged(true);
+                }}
+                rules={[{ 
+                    whitespace: true
+                }]}
+                >
+                  <Input/>
+                </Form.Item>
+
+                <Form.Item
+                label="Description"
+                name="description"
+                initialValue={mapInfo.description}
+                value={mapInfo.description}
+                tooltip="A global description of your map"
+                onChange={(e)=> {
+                  if(e.target.value !== e.target.defaultValue) setHasValuesChanged(true);
+                  setMapInfo({
+                    ...mapInfo,
+                    description: e.target.value
+                  });
+                }}
+                rules={[{ 
+                    whitespace: true,
+                }]}
+                >
+                    <Input.TextArea 
+                    allowClear="true"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                label="Begin of the map "
+                name="firstClue"
+                initialValue={mapInfo.firstClue}
+                value={mapInfo.firstClue}
+                tooltip="Initial text to find the first flag"
+                onChange={(e)=>{
+                  if(e.target.value !== e.target.defaultValue) setHasValuesChanged(true);
+                  setMapInfo({
+                    ...mapInfo,
+                    firstClue: e.target.value
+                  });
+                }}
+                rules={[{ 
+                    whitespace: true,
+                }]}
+                >
+                    <Input.TextArea 
+                    allowClear="true"
+                    />
+                </Form.Item>
+
+                {/* TODO: list all the flags with an icon to edit (button which opens a modal)*/}
+
+                <Modal_flag_creation_window mapId={id}
+                  butText="Add a new Flag"
+                  title="Fill the information for the new flag"
+                />
+                <Form.Item {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit" disabled={hasValuesChanged ? false : true}>
+                        Update your map
+                    </Button>
+                </Form.Item>
+            </Form> 
+            : <Empty />
+            }
+            </>
+    }
+    </MainLayout>
+  )
+};
+
+export default edit;
