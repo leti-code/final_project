@@ -1,6 +1,6 @@
 import openNotification from "@components/common/notification";
-import {Form, Input, Button, Spin, Divider, Empty, Avatar} from 'antd';
-import { LoadingOutlined, EditTwoTone } from '@ant-design/icons';
+import {Form, Input, Button, Spin, Divider, Empty, Avatar, Table} from 'antd';
+import { LoadingOutlined, EditTwoTone, EditFilled } from '@ant-design/icons';
 import { useForm } from 'antd/lib/form/Form';
 import Image from 'next/image';
 
@@ -11,6 +11,7 @@ import {useRouter} from 'next/router';
 import MainLayout from "layouts/MainLayout";
 import styles from '../../../styles/editMap.module.scss';
 import Modal_flag_creation_window from "@components/common/modalFlagForm";
+import Modal_flag_update_window from "@components/common/modalFlagUpdate";
 
 
 
@@ -28,7 +29,6 @@ const edit = ({id}) => {
     const [hasValuesChanged, setHasValuesChanged] = useState(false);
     const router = useRouter();
     const [form] = useForm();
-
 
     /*Stuff of ant design styles for form */
     const formItemLayout = {
@@ -57,10 +57,7 @@ const edit = ({id}) => {
 
     const onFinish = async () => {
       console.log("The new values", mapInfo);
-    };
-
-    const handleAddFlag = () => {
-      console.log("I'm creating a flag...");
+      //TODO: make the petition to update PUT
     };
 
     useEffect(() => {
@@ -85,6 +82,55 @@ const edit = ({id}) => {
         const newToken = window.localStorage.getItem("byb_token");
         getMap(newToken);
     }, []);
+
+    /*This variable has the structure of tha table of the active maps (the games the user has already started playing) */
+    const columns = [
+      {
+        title: 'Question',
+        dataIndex: 'question',
+        width: "50px",
+      },
+      {
+        title: 'Correct answer',
+        dataIndex: 'answer',
+        width: "50px",
+      },
+      {
+        title: 'Score',
+        dataIndex: 'score',
+        width: "50px",
+
+      },
+      {
+        title: 'Next clue',
+        dataIndex: 'clue',
+        width: "50px",
+      },
+      {
+        title: 'Edit Flag',
+        dataIndex: 'edit',
+        width: "20px",
+      },
+    ];
+
+    const tableData = [];
+    if (isLoading === false && mapInfo) {
+      for (let i = 0; i < mapInfo.flags.length; i++) {
+        tableData.push({
+          key: i,
+          question: mapInfo.flags[i].question,
+          answer: mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer],
+          score: mapInfo.flags[i].score,
+          clue: mapInfo.flags[i].clueToNextFlag,
+          //TODO: edit and create flag_update_window
+          edit:  <Modal_flag_update_window flagId={mapInfo.flags[i]._id} 
+                    butText={<EditFilled />}
+                    title="Change the information you want to update"
+                  />,
+        });
+
+      }
+    };
   return (
     <MainLayout>
       {isLoading ? 
@@ -100,10 +146,10 @@ const edit = ({id}) => {
         {...formItemLayout}
         form={form}
         className={styles.editMapComponent}
-            onFinish={onFinish}
-            method='POST'
-            scrollToFirstError
-            >
+        onFinish={onFinish}
+        method='POST'
+        scrollToFirstError
+      >
             <div className={styles.mapImage}>
               <Avatar size={250} shape="square" src={mapInfo.img ? mapInfo.img : "/defaultMap.jpg"}/>
               <Avatar size="small" icon={<EditTwoTone/>} />
@@ -173,6 +219,12 @@ const edit = ({id}) => {
                 </Form.Item>
 
                 {/* TODO: list all the flags with an icon to edit (button which opens a modal)*/}
+                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} 
+                  // expandable={{
+                  //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.allAnswers}</p>,
+                  //   rowExpandable: record => record.answer !== 'Not Expandable',
+                  // }}
+                />
 
                 <Modal_flag_creation_window mapId={id}
                   butText="Add a new Flag"

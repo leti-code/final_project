@@ -4,16 +4,16 @@ import db from "@lib/dbConnect";
 
 const flagController = async (req, res) => {
     switch (req.method) {
-        case "GET":
+        //TODO: better PUT or make and [id].js??
+        case "PUT":
             await db();
-            const flags = await Flag.find({});
+            const flag = await Flag.findById(req.body.id);
             return res.status(200).json({
                 success: true,
-                flags
+                flag
             });
         case "POST":
             try {
-                console.log("Lo que llega", req.body);
                 await db();
                 const flag = new Flag({
                     qr: req.body.qr,
