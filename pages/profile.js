@@ -3,12 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/router';
 import Image from 'next/image';
 
-import { Avatar, Card, Divider, Table, Row, Col } from 'antd';
+import { Avatar, Card, Divider, Table, Row, Col, Button } from 'antd';
 import { EditOutlined, SettingOutlined, EditTwoTone } from '@ant-design/icons';
 
 import MainLayout from "layouts/MainLayout";
 import openNotification from "@components/common/notification";
 import { setLogged} from 'store/slices/user/user.slice';
+import Link from 'next/link';
 
 
 
@@ -131,21 +132,24 @@ const Profile = () => {
                     <Row gutter={[6,32]} >
                     {
                         //here we display the maps the user has created same as we do with the available maps in home page
-                    userInfo.maps_owned.map(card => (
+                    userInfo.maps_owned.map((card, index) => (
                         <Col className="gutter-row" span={8}>
                         <Card
+                        key={index}
                         style={{ width: 300 }}
                         bordered={true}
                         cover={
                             <Image
                             alt="map Image"
-                            src={card.img ? card.img : "/map.jpg"}
+                            src={card.img ? card.img : "/defaultMap.jpg"}
                             width={300}
                             height={200}
                             />
                         }
                         actions={[
-                            <SettingOutlined key="setting" />,
+                                <Link href={`/map/${card._id}/edit`}>
+                                    <a>{<SettingOutlined key="setting"/>}</a>
+                                </Link>,
                             <EditOutlined key="edit" />,
                         ]}
                         >

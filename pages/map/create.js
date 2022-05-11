@@ -1,4 +1,4 @@
-import {React,useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import {Form, Input, Button, Upload} from 'antd';
 import {useRouter} from 'next/router';
 import { useForm } from 'antd/lib/form/Form';
@@ -99,11 +99,10 @@ const createMap = () => {
                }),
            })
            const json = await res.json();
-           console.log(json);
            const {error} = json;
            if (error) throw error;
            openNotification({msg: "Success!", description: "Your map has been created. Now create some flags!"});
-           router.push("./"); //TODO: go to createFlag
+            router.push(`/map/${json.map._id}/edit`); //TODO: go to createFlag
          }catch(er){
            console.log({er})
            openNotification({msg: "Error", description: er});

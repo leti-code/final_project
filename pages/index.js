@@ -50,15 +50,15 @@ const Index = () => {
     <Row gutter={[6,32]} >
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
-      cards.map(card => (
-        <Col className="gutter-row" span={8}>
+      cards.map((card, index) => (
+        <Col className="gutter-row" span={8} key={index}>
         <Card
           style={{ width: 300 }}
           bordered={true}
           cover={
             <Image
               alt="map Image"
-              src={card.img ? card.img : "/map.jpg"}
+              src={card.img ? card.img : "/defaultMap.jpg"}
               width={300}
               height={200}
             />
