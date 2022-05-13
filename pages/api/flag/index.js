@@ -4,14 +4,20 @@ import db from "@lib/dbConnect";
 
 const flagController = async (req, res) => {
     switch (req.method) {
-        //TODO: better PUT or make and [id].js??
-        case "PUT":
+        case "GET":
             await db();
-            const flag = await Flag.findById(req.body.id);
+            const flags = await Flag.find({});
             return res.status(200).json({
                 success: true,
-                flag
+                flags
             });
+        case "PUT":
+            await db();
+            // const flag = await Flag.findById(req.body.id);
+            // return res.status(200).json({
+            //     success: true,
+            //     flag
+            // });
         case "POST":
             try {
                 await db();

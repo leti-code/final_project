@@ -9,7 +9,6 @@ import openNotification from '@components/common/notification';
 /*Component import from Ant Design. It allows you to display a pop up window with some information and and "Accept" or "Cancel" option to continue or stop whatever proccess it refers */
 const Modal_flag_creation_window = ({butText, title, mapId}) => {
     const initialFlag = {
-        qr: '',
         question: '',
         answer: Array(4).fill(""),
 
@@ -60,7 +59,6 @@ const Modal_flag_creation_window = ({butText, title, mapId}) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                qr: "pruebita", //TODO: change
                 question: flag.question,
                 answer: flag.answer,
                 correctAnswer: flag.correctAnswer,

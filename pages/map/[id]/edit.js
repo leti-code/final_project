@@ -1,10 +1,8 @@
 import openNotification from "@components/common/notification";
 import {Form, Input, Button, Spin, Divider, Empty, Avatar, Table} from 'antd';
-import { LoadingOutlined, EditTwoTone, EditFilled } from '@ant-design/icons';
+import { LoadingOutlined, EditTwoTone, EditFilled, CloudDownloadOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/lib/form/Form';
-import Image from 'next/image';
-
-
+import { saveAs } from 'file-saver';
 
 import { useEffect, useState } from "react";
 import {useRouter} from 'next/router';
@@ -12,6 +10,7 @@ import MainLayout from "layouts/MainLayout";
 import styles from '../../../styles/editMap.module.scss';
 import Modal_flag_creation_window from "@components/common/modalFlagForm";
 import Modal_flag_update_window from "@components/common/modalFlagUpdate";
+import DownloadButton from "@components/common/downloadButton";
 
 
 
@@ -58,6 +57,13 @@ const edit = ({id}) => {
     const onFinish = async () => {
       console.log("The new values", mapInfo);
       //TODO: make the petition to update PUT
+    };
+
+    const downloadImage = (flag_id) => {
+      const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
+      const myPage = "https://localhost:3000/map/[id]/play/";
+      const qrCode = baseUrl + myPage + flag_id;
+      saveAs(qrCode, `${flag_id}.jpg`) // Put your image url here.
     };
 
     useEffect(() => {
@@ -107,10 +113,15 @@ const edit = ({id}) => {
         width: "50px",
       },
       {
-        title: 'Edit Flag',
+        title: 'Edit flag',
         dataIndex: 'edit',
         width: "20px",
       },
+      {
+        title: 'Download flag QR',
+        dataIndex: 'download',
+        width: "20px",
+      }
     ];
 
     const tableData = [];
@@ -123,10 +134,14 @@ const edit = ({id}) => {
           score: mapInfo.flags[i].score,
           clue: mapInfo.flags[i].clueToNextFlag,
           //TODO: edit and create flag_update_window
-          edit:  <Modal_flag_update_window flagId={mapInfo.flags[i]._id} 
+          edit: 
+           <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
                     butText={<EditFilled />}
                     title="Change the information you want to update"
-                  />,
+                    indexOfFlag={i}
+            />,
+          download: 
+            <DownloadButton name={`Flag ${i+1}(${mapInfo.flags[i]._id})`}/>
         });
 
       }

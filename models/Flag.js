@@ -4,10 +4,6 @@ import mongoose from 'mongoose';
 It contents different variables with its type and also the required option (to work similar to SQL with some required fields)
 If we make the petition to the service of the database withous any of the required fields, the query will be refused. */
 const FlagSchema = new mongoose.Schema({
-    qr: {
-        type: String,
-        required: [true, 'Please provide a QR/url/id.']
-    },
     question: {
         type: String,
         required: [true, 'Please provide a question.']
