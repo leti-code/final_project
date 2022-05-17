@@ -188,7 +188,7 @@ const Modal_flag_creation_window = ({butText, title, mapId}) => {
                     value={flag.score}
                     onChange={(e)=>setFlag({
                         ...flag,
-                        score: e.target.value
+                        score: parseInt(e.target.value)
                     })}
                 >
                     <InputNumber
