@@ -150,7 +150,7 @@ const Profile = () => {
                                 <Link href={`/map/${card._id}/edit`}>
                                     <a>{<SettingOutlined key="setting"/>}</a>
                                 </Link>,
-                            <EditOutlined key="edit" />,
+                           // <EditOutlined key="edit" />,
                         ]}
                         >
                         <Meta
