@@ -14,11 +14,22 @@ const mapController = async (req, res) => {
                 success: true,
                 map
             });
-        // case "PUT":
-
-        // case "POST":
-        //     await db();
-        //     //updated the map and add the flags to it if there's any
+        case "PUT":
+            await db();
+            const updatedMap = await Map.findByIdAndUpdate(
+                {_id: req.query.id},
+                {
+                    mapname: req.body.mapname,
+                    description: req.body.description,
+                    firstClue: req.body.firstClue,
+                },
+                {new: true}
+            );
+            if (!updatedMap) return  res.status(404).json({ success: false, error: "Map not found" });
+            return res.status(200).json({
+                success: true,
+                updatedMap
+            });
         default:
             return res.status(405).json({
                 success: false,

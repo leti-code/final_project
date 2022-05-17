@@ -13,20 +13,30 @@ const flagController = async (req, res) => {
             });
         case "PUT":
             await db();
-            // const flag = await Flag.findById(req.body.id);
-            // return res.status(200).json({
-            //     success: true,
-            //     flag
-            // });
+            const updatedFlag = await Flag.findByIdAndUpdate(
+                {_id: req.body.id},
+                    {
+                        question: req.body.question,
+                        answer: req.body.answer,
+                        correctAnswer: req.body.correctAnswer,
+                        score: req.body.score || 0,
+                        clueToNextFlag: req.body.clueToNextFlag,
+                    },
+                    {new: true}
+                );
+                if (!updatedFlag) return  res.status(404).json({ success: false, error: "Flag not found" });
+                return res.status(200).json({
+                    success: true,
+                    updatedFlag
+                });
         case "POST":
             try {
                 await db();
                 const flag = new Flag({
-                    qr: req.body.qr,
                     question: req.body.question,
                     answer: req.body.answer,
                     correctAnswer: req.body.correctAnswer,
-                    score: req.body.score,
+                    score: req.body.score || 0,
                     clueToNextFlag: req.body.clueToNextFlag,
                     img: req.body.img
                 });

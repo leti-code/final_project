@@ -55,15 +55,21 @@ const edit = ({id}) => {
     /*End*/
 
     const onFinish = async () => {
-      console.log("The new values", mapInfo);
-      //TODO: make the petition to update PUT
-    };
-
-    const downloadImage = (flag_id) => {
-      const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
-      const myPage = "https://localhost:3000/map/[id]/play/";
-      const qrCode = baseUrl + myPage + flag_id;
-      saveAs(qrCode, `${flag_id}.jpg`) // Put your image url here.
+      const newToken = window.localStorage.getItem("byb_token");
+      //TODO: check if getting the token like this is correct
+      try {
+        const res = await fetch(`/api/map/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${newToken}`
+          },
+          body: JSON.stringify(mapInfo)
+        });
+        openNotification({msg:"Success!", description: "Your map has been updated!"});
+      } catch (er) {
+        openNotification({msg: "Error", description: "Something went wrong! Make sure the map exists, that you are the owner and try it later"});
+      }
     };
 
     useEffect(() => {
@@ -89,38 +95,38 @@ const edit = ({id}) => {
         getMap(newToken);
     }, []);
 
-    /*This variable has the structure of tha table of the active maps (the games the user has already started playing) */
+    /*This variable has the structure of tha table of the flags (all the stops a map has) */
     const columns = [
       {
         title: 'Question',
         dataIndex: 'question',
-        width: "50px",
+        // width: "50px",
       },
       {
         title: 'Correct answer',
         dataIndex: 'answer',
-        width: "50px",
+        // width: "50px",
       },
       {
         title: 'Score',
         dataIndex: 'score',
-        width: "50px",
+        // width: "50px",
 
       },
       {
         title: 'Next clue',
         dataIndex: 'clue',
-        width: "50px",
+        // width: "50px",
       },
       {
         title: 'Edit flag',
         dataIndex: 'edit',
-        width: "20px",
+        // width: "20px",
       },
       {
         title: 'Download flag QR',
         dataIndex: 'download',
-        width: "20px",
+        // width: "20px",
       }
     ];
 
@@ -133,7 +139,6 @@ const edit = ({id}) => {
           answer: mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer],
           score: mapInfo.flags[i].score,
           clue: mapInfo.flags[i].clueToNextFlag,
-          //TODO: edit and create flag_update_window
           edit: 
            <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
                     butText={<EditFilled />}
@@ -233,13 +238,7 @@ const edit = ({id}) => {
                     />
                 </Form.Item>
 
-                {/* TODO: list all the flags with an icon to edit (button which opens a modal)*/}
-                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} 
-                  // expandable={{
-                  //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.allAnswers}</p>,
-                  //   rowExpandable: record => record.answer !== 'Not Expandable',
-                  // }}
-                />
+                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }}/>
 
                 <Modal_flag_creation_window mapId={id}
                   butText="Add a new Flag"
