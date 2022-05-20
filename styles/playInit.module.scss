@@ -1,0 +1,28 @@
+@import './colors.scss';
+
+// .background {
+//     overflow:hidden;
+//     background-image: url("/map-background.png");
+//     background-size:cover;
+//     background-repeat: no-repeat;
+// }
+
+.backButton {
+    text-align: right;
+    margin-top: 3%;
+    margin-right: 5%;
+}
+
+.cardFirstClue {
+    background-color: whitesmoke;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border: 2px solid $primary-color;
+    border-radius: 50px 30px;
+    width: 100vh;
+    margin-top: 10vh;
+    margin-left: 25%;
+    text-align: left;
+}

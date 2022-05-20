@@ -1,18 +1,20 @@
 import { Card} from 'antd';
 import { Row, Col, Divider } from 'antd';
 
-import { PlaySquareOutlined} from '@ant-design/icons';
+import { PlaySquareOutlined, SettingOutlined} from '@ant-design/icons';
 import Image from 'next/image';
-import { Button } from "antd";
 import MainLayout from "layouts/MainLayout";
-import {useRouter} from 'next/router';
 import openNotification from '@components/common/notification';
 import { useState, useEffect } from 'react';
+import {useSelector} from 'react-redux';
+import Link from 'next/link';
+
 
 const Index = () => {
   const { Meta } = Card;
-  const router = useRouter();
   const [cards, setCards] = useState([]);
+  const {maps_owned} = useSelector(state => state.user);
+
 
   /*This is the method that will be executed when the component is mounted*/
   useEffect(async () => {
@@ -64,7 +66,14 @@ const Index = () => {
             />
           }
           actions={[
-            <PlaySquareOutlined key="play" alt="Start map" />,
+            maps_owned && maps_owned.find( map => map._id === card._id ) ?
+                <Link href={`/map/${card._id}/edit`}>
+                    <a>{<SettingOutlined key="setting" alt="Edit map"/>}</a>
+                </Link>
+            :
+                <Link href={`/map/${card._id}/play`}>
+                    <a>{ <PlaySquareOutlined key="play" alt="Start map" />}</a>
+                </Link>
           ]}
         >
           <Meta
