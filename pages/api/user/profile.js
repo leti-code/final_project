@@ -1,4 +1,7 @@
 import protect from './middleware';
+import db from '@lib/dbConnect';
+import User from '@models/User';
+
 
 const handler = async (req, res) => {
     switch (req.method) {
@@ -10,6 +13,17 @@ const handler = async (req, res) => {
                 success: true,
                 connected: true,
             })
+        case "PUT":
+            await db();
+            const updatedUser = await User.findByIdAndUpdate(
+                {_id: req.user._id},
+                {img: req.body.img},
+            );
+            if(!updatedUser) return res.status(404).json({success: false, error: "User not found"});
+            return res.status(200).json({
+                success: true,
+                updatedUser
+            });
         default:
             return res.status(405).json({
                 success: false,

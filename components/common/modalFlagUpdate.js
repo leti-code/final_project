@@ -7,6 +7,7 @@ import styles from '../../styles/editMap.module.scss';
 
 import openNotification from '@components/common/notification';
 import DownloadButton from '@components/common/downloadButton';
+import Modal_update_image from './modalUpdateImage';
 
 
 
@@ -64,6 +65,25 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
         setIsModalVisible(false);
     };
 
+    const saveInDatabase = async (img) => {
+        try {
+            const res = await fetch('/api/flag/', {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id : flagToUpdate._id,
+                    img
+                })
+            });
+            setIsModalVisible(false);
+            setHasFlagChanged(!hasFlagChanged);
+        } catch (er) {
+            openNotification({msg: "Error", description: "Couldn't set the info in the database. Please try again."});
+        }
+    };
+
     /*Rendered tags and elements */
     return (
         <>
@@ -86,8 +106,12 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
                 >
                     <Space size="large" className={styles.spacingImages} >
                         <Avatar size={150} shape="square" src={flag.img ? flag.img : "/defaultFlag.png"}/>
-                        <Button onClick={console.log(flag._id)} shape="circle" icon={<EditOutlined/>} />
-                        
+                        <Modal_update_image
+                            butText={<EditOutlined/>}
+                            title="Update your image. Choose a new one"
+                            preset="map_image"
+                            setNewImg={(img) => saveInDatabase(img)}    
+                        />
                         <DownloadButton src={qrSrc} name={`Flag ${indexOfFlag+1}(${flag._id})`}/>
                         <Avatar size={150} shape="square" src={qrSrc}/>
                     </Space>

@@ -14,6 +14,18 @@ const mapController = async (req, res) => {
                 success: true,
                 map
             });
+        case "PATCH":
+            await db();
+            const updatedMapImage = await Map.findByIdAndUpdate(
+                {_id: req.query.id},
+                {img: req.body.img},
+                {new: true}
+            );
+            if (!updatedMapImage) return  res.status(404).json({ success: false, error: "Map not found" });
+            return res.status(200).json({
+                success: true,
+                updatedMapImage
+            });
         case "PUT":
             await db();
             const updatedMap = await Map.findByIdAndUpdate(

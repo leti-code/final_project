@@ -29,6 +29,19 @@ const flagController = async (req, res) => {
                     success: true,
                     updatedFlag
                 });
+        case "PATCH":
+            await db();
+            const updatedFlag2 = await Flag.findByIdAndUpdate(
+                {_id: req.body.id},
+                {
+                    img: req.body.img,
+                },
+                {new: true});
+                if (!updatedFlag2) return  res.status(404).json({ success: false, error: "Flag not found" });
+                return res.status(200).json({
+                    success: true,
+                    updatedFlag2
+                });
         case "POST":
             try {
                 await db();

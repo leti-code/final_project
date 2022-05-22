@@ -11,6 +11,7 @@ import openNotification from "@components/common/notification";
 import { setLogged} from 'store/slices/user/user.slice';
 import Link from 'next/link';
 import styles from '../styles/index.module.scss';
+import Modal_update_image from '@components/common/modalUpdateImage';
 
 
 
@@ -20,8 +21,7 @@ const Profile = () => {
     const router = useRouter();
     const [userInfo, setUserInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-
-  const { Meta } = Card;
+    const { Meta } = Card;
 
     
     useEffect(async () => {
@@ -40,7 +40,7 @@ const Profile = () => {
                 return user;
             } catch (er) {
                 return ({success: false, user: null});
-            }finally {
+            } finally {
                 setIsLoading(false);
             }
         };
@@ -115,6 +115,23 @@ const Profile = () => {
         }
     };
 
+    const saveInDatabase = async (img) => {
+        try {
+            const res = await fetch('/api/user/profile', {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${window.localStorage.getItem("byb_token")}`
+                },
+                body: JSON.stringify({
+                    img
+                })
+            });
+        } catch (er) {
+            openNotification({msg: "Error", description: "Couldn't set the info in the database. Please try again."});
+        }
+    };
+
     /*Rendered component*/
     return (
         <MainLayout>
@@ -131,7 +148,12 @@ const Profile = () => {
                     <div>
                     <Avatar size={250} src={userInfo.img ? userInfo.img : "/userDefault.png"}/>
                     {/* //TODO: make a button to edit the image */}
-                    <Avatar size="small" icon={<EditTwoTone/>} />
+                    <Modal_update_image 
+                        butText={<EditTwoTone/>}
+                        title="Update your image. Choose a new one"
+                        preset="user_image"
+                        setNewImg={(img) => saveInDatabase(img)}
+                    />
                     </div>
 
                     {/*We can add pagination to our table to display only a few rows*/}

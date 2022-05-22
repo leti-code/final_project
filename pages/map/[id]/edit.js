@@ -11,6 +11,7 @@ import styles from '../../../styles/editMap.module.scss';
 import Modal_flag_creation_window from "@components/common/modalFlagForm";
 import Modal_flag_update_window from "@components/common/modalFlagUpdate";
 import DownloadButton from "@components/common/downloadButton";
+import Modal_update_image from "@components/common/modalUpdateImage";
 
 
 
@@ -77,6 +78,24 @@ const Edit = ({id}) => {
         openNotification({msg: "Error", description: "Something went wrong! Make sure the map exists, that you are the owner and try it later"});
       }
     };
+
+    const saveInDatabase = async (img) => {
+      try {
+          const res = await fetch(`/api/map/${id}`, {
+              method: "PATCH",
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${window.localStorage.getItem("byb_token")}`
+              },
+              body: JSON.stringify({
+                  img
+              })
+          });
+          setHasFlagChanged(!hasFlagChanged);
+      } catch (er) {
+          openNotification({msg: "Error", description: "Couldn't set the info in the database. Please try again."});
+      }
+  };
 
     useEffect(() => {
         async function getMap(token) {
@@ -181,7 +200,12 @@ const Edit = ({id}) => {
       >
             <div className={styles.mapImage}>
               <Avatar size={250} shape="square" src={mapInfo.img ? mapInfo.img : "/defaultMap.jpg"}/>
-              <Avatar size="small" icon={<EditTwoTone/>} />
+              <Modal_update_image 
+                butText={<EditTwoTone/>}
+                title="Update your image. Choose a new one"
+                preset="map_image"
+                setNewImg={(img) => saveInDatabase(img)}
+              />
             </div>
             <Form.Item
               label="Name"
