@@ -28,6 +28,7 @@ const Edit = ({id}) => {
     const [hasValuesChanged, setHasValuesChanged] = useState(false);
     const router = useRouter();
     const [form] = useForm();
+    const [hasFlagChanged, setHasFlagChanged] = useState(false);
 
     const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
     const mainUrl = process.env.NODE_ENV == "development" ? "localhost:3000" : "final-project-sandy.vercel.app";
@@ -98,7 +99,7 @@ const Edit = ({id}) => {
         };
         const newToken = window.localStorage.getItem("byb_token");
         getMap(newToken);
-    }, []);
+    }, [hasFlagChanged]);
 
     /*This variable has the structure of tha table of the flags (all the stops a map has) */
     const columns = [
@@ -150,6 +151,8 @@ const Edit = ({id}) => {
                     title="Change the information you want to update"
                     indexOfFlag={i}
                     qrSrc={baseUrl + myPage + mapInfo.flags[i]._id}
+                    setHasFlagChanged={setHasFlagChanged}
+                    hasFlagChanged={hasFlagChanged}
             />,
           download: 
             <DownloadButton src ={baseUrl + myPage + mapInfo.flags[i]._id} name={`Flag ${i+1}(${mapInfo.flags[i]._id})`}/>
@@ -249,6 +252,8 @@ const Edit = ({id}) => {
                 <Modal_flag_creation_window mapId={id}
                   butText="Add a new Flag"
                   title="Fill the information for the new flag"
+                  setHasFlagChanged={setHasFlagChanged}
+                  hasFlagChanged={hasFlagChanged}
                 />
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" disabled={hasValuesChanged ? false : true}>

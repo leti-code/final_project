@@ -11,7 +11,7 @@ import DownloadButton from '@components/common/downloadButton';
 
 
 /*Component import from Ant Design. It allows you to display a pop up window with some information and and "Accept" or "Cancel" option to continue or stop whatever proccess it refers */
-const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qrSrc}) => {
+const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qrSrc, setHasFlagChanged, hasFlagChanged}) => {
     const initialFlag = {
         question: '',
         answer: Array(4).fill(""),
@@ -52,6 +52,7 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
                     clueToNextFlag: flag.clueToNextFlag,
                 })
             });
+            setHasFlagChanged(!hasFlagChanged);
             openNotification({msg:"Success!", description: "Your flag has been updated!"});
         } catch (er) {
             openNotification({msg: "Error", description: "Something went wrong! Make sure the flag exists, that you are the owner and try it later"});

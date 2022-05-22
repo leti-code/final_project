@@ -7,7 +7,7 @@ import openNotification from '@components/common/notification';
 
 
 /*Component import from Ant Design. It allows you to display a pop up window with some information and and "Accept" or "Cancel" option to continue or stop whatever proccess it refers */
-const Modal_flag_creation_window = ({butText, title, mapId}) => {
+const Modal_flag_creation_window = ({butText, title, mapId, hasFlagChanged, setHasFlagChanged}) => {
     const initialFlag = {
         question: '',
         answer: Array(4).fill(""),
@@ -31,10 +31,6 @@ const Modal_flag_creation_window = ({butText, title, mapId}) => {
   };
 
   const handleOk = async () => {
-      console.log(flag);
-      /*TODO:
-      - generate the QR code
-       */
     try {
         if (flag.img) {
         const formData = new FormData();
@@ -67,12 +63,12 @@ const Modal_flag_creation_window = ({butText, title, mapId}) => {
                 img: flag.img,
                 mapId: mapId
             }),
-            // id: mapId //TOCHECK: if is valid
           })
           const json = await res.json();
           console.log(json);
           const {error} = json;
           if (error) throw error;
+          setHasFlagChanged(!hasFlagChanged);
           openNotification({msg: "Success!", description: "Your flag has been registered!"});
           setIsModalVisible(false);
     }catch(er){
