@@ -109,8 +109,8 @@ const Profile = () => {
             tableData.push({
                 key: i,
                 map: userInfo.active_maps[i].mapname,
-                flag: userInfo.actual_flag[i],
-                score: userInfo.scores[i]
+                flag: (userInfo.actual_flag[i] !== undefined) ? userInfo.actual_flag[i] : "You haven't started yet",
+                score: (userInfo.scores[i] !== -1) ? userInfo.scores[i] : 0,
             });
         }
     };
