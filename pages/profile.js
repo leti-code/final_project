@@ -3,13 +3,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/router';
 import Image from 'next/image';
 
-import { Avatar, Card, Divider, Table, Row, Col, Button } from 'antd';
-import { EditOutlined, SettingOutlined, EditTwoTone } from '@ant-design/icons';
+import { Spin, Avatar, Card, Divider, Table, Row, Col, Button } from 'antd';
+import { LoadingOutlined, SettingOutlined, EditTwoTone } from '@ant-design/icons';
 
 import MainLayout from "layouts/MainLayout";
 import openNotification from "@components/common/notification";
 import { setLogged} from 'store/slices/user/user.slice';
 import Link from 'next/link';
+import styles from '../styles/index.module.scss';
 
 
 
@@ -18,6 +19,7 @@ const Profile = () => {
     const {logged, username, email, img, active_maps, actual_flag, scores, maps_owned} = useSelector(state => state.user);
     const router = useRouter();
     const [userInfo, setUserInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
   const { Meta } = Card;
 
@@ -25,6 +27,7 @@ const Profile = () => {
     useEffect(async () => {
         async function getUser(token) {
             try {
+                setIsLoading(true);
                 /*We take the user information from the database with a request to the server side */
                 const res = await fetch('/api/user/profile', {
                     method: 'GET',
@@ -37,6 +40,8 @@ const Profile = () => {
                 return user;
             } catch (er) {
                 return ({success: false, user: null});
+            }finally {
+                setIsLoading(false);
             }
         };
 
@@ -114,6 +119,11 @@ const Profile = () => {
     return (
         <MainLayout>
             {
+                isLoading ?
+                    <div className={styles.loading}>
+                    <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
+                    </div> 
+                :
                 userInfo &&
                 <>
                     <Divider orientation="left">User profile</Divider>
@@ -131,7 +141,7 @@ const Profile = () => {
                     <Divider orientation="left">Your created maps</Divider>
                     <Row gutter={[6,32]} >
                     {
-                        //here we display the maps the user has created same as we do with the available maps in home page
+                    //here we display the maps the user has created same as we do with the available maps in home page
                     userInfo.maps_owned.map((card, index) => (
                         <Col className="gutter-row" span={8}>
                         <Card

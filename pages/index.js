@@ -1,26 +1,28 @@
 import { Card} from 'antd';
-import { Row, Col, Divider } from 'antd';
+import { Spin, Row, Col, Divider } from 'antd';
 
-import { PlaySquareOutlined, SettingOutlined} from '@ant-design/icons';
+import { PlaySquareOutlined, SettingOutlined, LoadingOutlined} from '@ant-design/icons';
 import Image from 'next/image';
 import MainLayout from "layouts/MainLayout";
 import openNotification from '@components/common/notification';
 import { useState, useEffect } from 'react';
 import {useSelector} from 'react-redux';
 import Link from 'next/link';
+import styles from '../styles/index.module.scss';
 
 
 const Index = () => {
   const { Meta } = Card;
   const [cards, setCards] = useState([]);
   const {maps_owned} = useSelector(state => state.user);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   /*This is the method that will be executed when the component is mounted*/
   useEffect(async () => {
     async function getMaps() {
       try {
         /*We make a request to get all the available maps */
+        setIsLoading(true);
         const res = await fetch("/api/map/list", {
           method: "GET",
           headers: {
@@ -31,6 +33,8 @@ const Index = () => {
         return maps;
       }catch(er) {
         return({success: false, maps: null});
+      }finally {
+        setIsLoading(false);
       }
     };
     const {success, maps} = await getMaps();
@@ -52,8 +56,13 @@ We invite you to browse through our pages, where you can find the different opti
 </p>
 
     <Divider orientation="left">See our maps and play</Divider>
-
-    {/*We use the Row and Col components from ant design to display the map cards in a grid*/}
+    {
+      isLoading ?
+      <div className={styles.loading}>
+      <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
+      </div> 
+      :
+    /*We use the Row and Col components from ant design to display the map cards in a grid*/
     <Row gutter={[6,32]} >
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
@@ -89,6 +98,7 @@ We invite you to browse through our pages, where you can find the different opti
         </Col>
         ))}
     </Row>
+    }
 
     
     </MainLayout>
