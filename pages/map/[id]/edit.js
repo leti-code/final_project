@@ -30,7 +30,7 @@ const Edit = ({id}) => {
     const [form] = useForm();
 
     const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
-    const mainUrl = process.env.NODE_ENV == "development" ? "localhost:3000" : "https://final-project-sandy.vercel.app/";
+    const mainUrl = process.env.NODE_ENV == "development" ? "localhost:3000" : "final-project-sandy.vercel.app";
     const myPage = `https://${mainUrl}/map/${id}/play/`;
    
 
