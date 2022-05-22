@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
     }
   };
 
-const edit = ({id}) => {
+const Edit = ({id}) => {
     const [mapInfo, setMapInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [hasValuesChanged, setHasValuesChanged] = useState(false);
@@ -258,4 +258,4 @@ const edit = ({id}) => {
   )
 };
 
-export default edit;
+export default Edit;
