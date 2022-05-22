@@ -11,7 +11,7 @@ import DownloadButton from '@components/common/downloadButton';
 
 
 /*Component import from Ant Design. It allows you to display a pop up window with some information and and "Accept" or "Cancel" option to continue or stop whatever proccess it refers */
-const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag}) => {
+const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qrSrc}) => {
     const initialFlag = {
         question: '',
         answer: Array(4).fill(""),
@@ -29,10 +29,6 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag}) =
     const [form] = useForm();
 
     const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
-
-    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
-    const myPage = "https://localhost:3000/map/[id]/play/";
-    const qrCode = baseUrl + myPage + flagToUpdate._id;
 
 
     const showModal = () => {
@@ -91,8 +87,8 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag}) =
                         <Avatar size={150} shape="square" src={flag.img ? flag.img : "/defaultFlag.png"}/>
                         <Button onClick={console.log(flag._id)} shape="circle" icon={<EditOutlined/>} />
                         
-                        <DownloadButton src={qrCode} name={`Flag ${indexOfFlag+1}(${flag._id})`}/>
-                        <Avatar size={150} shape="square" src={qrCode}/>
+                        <DownloadButton src={qrSrc} name={`Flag ${indexOfFlag+1}(${flag._id})`}/>
+                        <Avatar size={150} shape="square" src={qrSrc}/>
                     </Space>
                     <Form.Item
                         label="Question"

@@ -29,6 +29,11 @@ const Edit = ({id}) => {
     const router = useRouter();
     const [form] = useForm();
 
+    const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
+    const mainUrl = process.env.NODE_ENV == "development" ? "localhost:3000" : "https://final-project-sandy.vercel.app/";
+    const myPage = `https://${mainUrl}/map/${id}/play/`;
+   
+
     /*Stuff of ant design styles for form */
     const formItemLayout = {
       labelCol: {
@@ -144,9 +149,10 @@ const Edit = ({id}) => {
                     butText={<EditFilled />}
                     title="Change the information you want to update"
                     indexOfFlag={i}
+                    qrSrc={baseUrl + myPage + mapInfo.flags[i]._id}
             />,
           download: 
-            <DownloadButton name={`Flag ${i+1}(${mapInfo.flags[i]._id})`}/>
+            <DownloadButton src ={baseUrl + myPage + mapInfo.flags[i]._id} name={`Flag ${i+1}(${mapInfo.flags[i]._id})`}/>
         });
 
       }
