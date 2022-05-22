@@ -1,6 +1,5 @@
 import { Card} from 'antd';
 import { Row, Col, Divider } from 'antd';
-
 import { PlaySquareOutlined, SettingOutlined} from '@ant-design/icons';
 import Image from 'next/image';
 import MainLayout from "layouts/MainLayout";
@@ -10,11 +9,11 @@ import {useSelector} from 'react-redux';
 import Link from 'next/link';
 
 
-const Index = () => {
+
+const ListOfMaps = () => {
   const { Meta } = Card;
   const [cards, setCards] = useState([]);
   const {maps_owned} = useSelector(state => state.user);
-
 
   /*This is the method that will be executed when the component is mounted*/
   useEffect(async () => {
@@ -42,16 +41,12 @@ const Index = () => {
 
   return(
     <MainLayout>
-
-      {/*TODO: little description of the app */}
-    <Divider orientation='="left'>Welcome to ByB!</Divider>
-    <p>Welcome to Break your Brain. This is an application designed for its users to create game maps and play existing maps.
-To play or create you need to be registered (you can find the link in the menu), which will open the doors to hours of endless fun.
-The game maps are the classic game of clues, each of which allows you to find a point on the map. At this point you will find a question with several answers and if you get it right you will be awarded a score and provided with the next clue to find the next point.
-We invite you to browse through our pages, where you can find the different options of our application.
+    <Divider orientation="left">Our maps</Divider>
+    <p>On this page you will find a list of all maps available for play.
+On each of the cards you will see the description of the game and an icon that you can click on.
+If the map has been created by you, the icon is a gear that will give you access to the configuration of your map so you can modify it, as well as get the QRs needed to find each flag or stop. Otherwise, the icon is a play and pressing it the game will start, being registered in your user profile.
 </p>
-
-    <Divider orientation="left">See our maps and play</Divider>
+    <Divider orientation="left">Choose a map and play!</Divider>
 
     {/*We use the Row and Col components from ant design to display the map cards in a grid*/}
     <Row gutter={[6,32]} >
@@ -89,11 +84,9 @@ We invite you to browse through our pages, where you can find the different opti
         </Col>
         ))}
     </Row>
-
-    
     </MainLayout>
   );
 } 
 
-export default Index;
+export default ListOfMaps;
 

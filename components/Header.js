@@ -34,7 +34,7 @@ const Header = () => {
         </Link>
         </Menu.Item>
         <Menu.Item>
-        <Link href="/">
+        <Link href="/list">
         <a>Available Maps</a>
         </Link>
         </Menu.Item>
