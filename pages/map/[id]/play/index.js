@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import {useRouter} from 'next/router';
 import styles from '../../../../styles/playInit.module.scss';
 import Footer from "@components/Footer";
+import { useSelector } from 'react-redux';
+
+// import Image from 'next/image';
+
 
 
 
@@ -22,6 +26,7 @@ const Play = ({id}) => {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const [hasJoined, setHasJoined] = useState(false);
+    const {active_maps} = useSelector(state => state.user);
 
     const setTheGame = async () => {
       console.log("I'm setting on user profile this map");
@@ -64,6 +69,8 @@ const Play = ({id}) => {
                     },
                 })
                 const {map} = await res.json();
+                if (active_maps.find(map => map._id === map._id))
+                  setHasJoined(true);
                 setMapInfo(map);
                 setIsLoading(false);
             } catch (er) {
@@ -77,9 +84,6 @@ const Play = ({id}) => {
    
   return (
     <div className ={styles.background}>
-        <div className={styles.backButton}>
-            <Button danger type="primary" onClick={() => router.push("/") /*TODO: que salte un alert avisando */} icon={<CloseOutlined />}/>
-        </div>
       {isLoading ? 
       <div className={styles.loading}>
       <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
@@ -87,9 +91,27 @@ const Play = ({id}) => {
       : 
       <>
       {mapInfo ?
-      <>
-      <Divider orientation="center">{mapInfo.mapname}</Divider>
-      <p>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
+        <>
+        {/* {mapInfo.img &&
+        <>
+        <div className={styles.header}>
+          <img
+                src={mapInfo.img}
+                width="100vw"
+                
+                // layout="intrinsic"
+                // sizes="(max-width: 800px) 100vw, 800px"
+                // objectFit="parent"
+                // width={1500}
+                // height={1000}
+              />
+        </div> */}
+        <div className={styles.backButton}>
+            <Button danger type="primary" onClick={() => router.push("/") /*TODO: que salte un alert avisando */} icon={<CloseOutlined />}/>
+        </div>
+        {/* </>} */}
+        <Divider orientation="center">{mapInfo.mapname}</Divider>
+        <p>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
 Once you decipher the clue, go to the place it indicates to find the QR code, scan it with any QR scanner application, access the QR link and the first question will appear on your screen.</p>
             <div className={styles.cardFirstClue}>
             {/* <Card> */}
