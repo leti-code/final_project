@@ -3,7 +3,7 @@
   "short_name": "ByB",
   "theme_color": "#fff",
   "background_color": "#fff",
-  "display": "browser",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
