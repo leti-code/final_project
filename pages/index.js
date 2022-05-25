@@ -63,11 +63,12 @@ We invite you to browse through our pages, where you can find the different opti
       </div> 
       :
     /*We use the Row and Col components from ant design to display the map cards in a grid*/
-    <Row gutter={[6,32]} >
+   <Row gutter={[12,32]} >
+   {/* <ul> */}
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
       cards.map((card, index) => (
-        <Col className="gutter-row" span={8} key={index}>
+        <Col className="gutter-row" span={24} key={index}>
         <Card
           style={{ width: 300 }}
           bordered={true}
@@ -77,6 +78,7 @@ We invite you to browse through our pages, where you can find the different opti
               src={card.img ? card.img : "/defaultMap.jpg"}
               width={300}
               height={200}
+              layout="responsive"
             />
           }
           actions={[
