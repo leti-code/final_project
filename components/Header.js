@@ -56,19 +56,9 @@ const Header = () => {
     /*Rendered header component */
     return (
     <PageHeader
-        // avatar={{
-            //icon: <UserOutlined />
-            // src:{<Image
-            //     src="/galaxy.jpg"
-            //     alt="Galaxy"
-            //     width={1000}
-            //     height={750}
-            //   />}
-        // }}
-        //title="Break your Brain"
         className={styles.headerComponent}
         extra={[
-        <DropdownMenu key="more" className={styles.dropDownMenu} />,
+            <DropdownMenu key="more" className={styles.dropDownMenu} />,
         /*Here we find a Link element that routes into the home page, instead a text/button it is an image of the logo of the application */
         <Link href="/">
             <a className={styles.logo}>
@@ -79,21 +69,21 @@ const Header = () => {
                 alt="ByB"
                 width={80}
                 height={80}
-            />
+                />
             </a>
         </Link>,
         /*Title of the header */
-        <h1>Break your Brain</h1>,
+        <h1 className={styles.title}>ByB</h1>,
         /*Login button, it use the dispatcher to see if your are logged or not and has a different behavior in both cases */
         <Button 
-
-            className={styles.logButton}
-            onClick={() => {
-                if(logged === true) {
-                    //If you are logged, you can logout, that means that you need to set the dispatcher of the user to false and null values
-                    dispatch(setLogged({  
-                        logged: false, 
-                        token: '', 
+        
+        className={styles.logButton}
+        onClick={() => {
+            if(logged === true) {
+                //If you are logged, you can logout, that means that you need to set the dispatcher of the user to false and null values
+                dispatch(setLogged({  
+                    logged: false, 
+                    token: '', 
                         username: '',
                         email: '',
                         img: '',
@@ -107,12 +97,12 @@ const Header = () => {
                 } else //If you are not logged, you can login, it routes you into the login page
                 router.push('/login')
             }}
-        >
+            >
             {/*The content of the button displayed changes depending of if you are logged or not */}
             {logged ? "Logout" : "Login"}
         </Button>,
         ]}
-    >
+        >
     </PageHeader>
     );
     

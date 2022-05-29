@@ -3,13 +3,15 @@
 .headerComponent{
     background-color: $primary-color;
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
-    // flex-wrap: nowrap;
-
-    //      //TODO: responsive position (see flex to the component)
    
     .logo:hover {
         cursor: pointer;
+    }
+
+    .title {
+        vertical-align: center  ;
+        margin-top: 0.5em;
+        margin-right: 0.75em;
     }
 }

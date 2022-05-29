@@ -8,11 +8,6 @@ import styles from '../../../../styles/playInit.module.scss';
 import Footer from "@components/Footer";
 import { useSelector } from 'react-redux';
 
-// import Image from 'next/image';
-
-
-
-
 export async function getServerSideProps(context) {
     const { id } = context.params;
     
@@ -34,7 +29,6 @@ const Play = ({id}) => {
         //TODO: necesito pasarle el id del usuario y el id del mapa (eso ya se lo pasamos)
         //de modo que pueda hacer push en el array correspondiente del usuario y setear los otros valores
         //(score -1 y flag undefined)
-        //mando el token y lo decodifico?? y sisi, en un middleware o en el back?
         const res = await fetch('/api/play', {
           method: 'POST',
           headers: {
@@ -69,7 +63,7 @@ const Play = ({id}) => {
                     },
                 })
                 const {map} = await res.json();
-                if (active_maps.find(map => map._id === map._id))
+                if (active_maps.find(singleMap => map._id === singleMap._id) !== undefined)
                   setHasJoined(true);
                 setMapInfo(map);
                 setIsLoading(false);
@@ -92,31 +86,14 @@ const Play = ({id}) => {
       <>
       {mapInfo ?
         <>
-        {/* {mapInfo.img &&
-        <>
-        <div className={styles.header}>
-          <img
-                src={mapInfo.img}
-                width="100vw"
-                
-                // layout="intrinsic"
-                // sizes="(max-width: 800px) 100vw, 800px"
-                // objectFit="parent"
-                // width={1500}
-                // height={1000}
-              />
-        </div> */}
         <div className={styles.backButton}>
             <Button danger type="primary" onClick={() => router.push("/") /*TODO: que salte un alert avisando */} icon={<CloseOutlined />}/>
         </div>
-        {/* </>} */}
         <Divider orientation="center">{mapInfo.mapname}</Divider>
         <p>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
 Once you decipher the clue, go to the place it indicates to find the QR code, scan it with any QR scanner application, access the QR link and the first question will appear on your screen.</p>
             <div className={styles.cardFirstClue}>
-            {/* <Card> */}
             {mapInfo.firstClue}
-            {/* </Card> */}
             </div>
             <div className={styles.joinButton}>
             {
