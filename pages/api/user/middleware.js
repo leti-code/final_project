@@ -16,7 +16,7 @@ const protect = (handler) => {
                 
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-                let currentUser = await User.findById(decoded.id).select('-password').populate(['maps_owned', 'actual_flag', 'active_maps']);
+                let currentUser = await User.findById(decoded.id).select('-password').populate(['maps_owned', {path: 'actual_flag', options:{retainNullValues: true}}, 'active_maps']);
                 if (!currentUser) {
                     return res.status(401).json({
                       success: false,

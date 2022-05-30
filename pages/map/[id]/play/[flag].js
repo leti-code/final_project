@@ -1,11 +1,12 @@
 import openNotification from "@components/common/notification";
-import {Button, Spin, Divider, Empty, Avatar, Card} from 'antd';
+import {Button, Spin, Radio, Divider, Empty, Avatar, Card} from 'antd';
 import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { useEffect, useState } from "react";
 import {useRouter} from 'next/router';
-import styles from '../../../../styles/playInit.module.scss';
+import styles from '../../../../styles/playScreen.module.scss';
 import Footer from "@components/Footer";
+import Image from 'next/image';
 
 
 
@@ -19,16 +20,9 @@ export async function getServerSideProps(context) {
   };
 
 const PlayFlag = ({id, flag}) => {
-    // const [mapInfo, setMapInfo] = useState(null);
     const [flagInfo, setFlagInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    // const [isJoined, setIsJoined] = useState(false);
-
-    // const setTheGame = async () => {
-    //   console.log("I'm setting on user profile this map")
-    //   setIsJoined(true);
-    // };
 
     useEffect(() => {
         async function getMap(token) {
@@ -68,6 +62,10 @@ const PlayFlag = ({id, flag}) => {
         const newToken = window.localStorage.getItem("byb_token");
         getMap(newToken);
     }, []);
+
+   const checkTheAnswer = (answer) => {
+      console.log("Esta es la respuesta marcada: ", answer);
+    };
    
   return (
     <div className ={styles.background}>
@@ -84,10 +82,46 @@ const PlayFlag = ({id, flag}) => {
       <>
        {/* <Divider orientation="center">{mapInfo.mapname}</Divider> */}
        <p>Here you will find the cuestion you must answer. Once you have the right answer you will receive the next clue.</p>
-       <p>{flagInfo.question  }</p>
-             {/* <div className={styles.cardFirstClue}>
-             {mapInfo.firstClue}
-             </div> */}
+       { 
+        flagInfo.img &&
+        <div className={styles.flagImage}>
+          <Card
+
+            style={{ width: 350, height:200 }}
+            bordered={true}
+            cover={
+              <Image
+                alt="flag Image"
+                src={flagInfo.img}
+                width={350}
+                height={200}
+                layout="responsive"
+              />
+            }
+          >
+          </Card>
+        </div>
+       }
+       <div className={styles.question}>
+        <strong>{flagInfo.question  }</strong>
+       </div>
+          <Radio.Group 
+            defaultValue={flagInfo.answer[0]}
+            onChange={(e)=>{
+              checkTheAnswer(e.target.value)
+            }}
+          >
+          {
+            flagInfo.answer.map((answer, index) => {
+            return (
+              <div className={styles.item}>
+              <Radio value={index} key={index}>
+                {answer}
+              </Radio>
+              </div>);
+            })
+            } 
+          </Radio.Group>
              </>
              : <Empty />
              }

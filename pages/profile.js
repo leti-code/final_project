@@ -109,7 +109,11 @@ const Profile = () => {
             tableData.push({
                 key: i,
                 map: userInfo.active_maps[i].mapname,
-                flag: (userInfo.actual_flag[i] !== undefined) ? userInfo.actual_flag[i] : "You haven't started yet",
+                flag: (userInfo.actual_flag[i] !== null) ? 
+                <Link href={`/map/${userInfo.active_maps[i]._id}/play/${userInfo.actual_flag[i]._id}`}>
+                    <a>Go!</a>
+                </Link>
+                 : "You haven't started yet",
                 score: (userInfo.scores[i] !== -1) ? userInfo.scores[i] : 0,
             });
         }
@@ -157,32 +161,31 @@ const Profile = () => {
                     </div>
 
                     {/*We can add pagination to our table to display only a few rows*/}
-                    <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 3 }} />
+                    <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 3 }} width={400}/>
 
 
                     <Divider orientation="left">Your created maps</Divider>
-                    <Row gutter={[6,32]} >
+                    <Row gutter={[12,32]} >
                     {
                     //here we display the maps the user has created same as we do with the available maps in home page
                     userInfo.maps_owned.map((card, index) => (
-                        <Col className="gutter-row" span={8}>
+                        <Col className="gutter-row" span={24}>
                         <Card
                         key={index}
                         style={{ width: 300 }}
                         bordered={true}
                         cover={
                             <Image
-                            alt="map Image"
-                            src={card.img ? card.img : "/defaultMap.jpg"}
-                            width={300}
-                            height={200}
+                                alt="map Image"
+                                src={card.img ? card.img : "/defaultMap.jpg"}
+                                width={300}
+                                height={200}
                             />
                         }
                         actions={[
                                 <Link href={`/map/${card._id}/edit`}>
                                     <a>{<SettingOutlined key="setting" alt="Edit map"/>}</a>
                                 </Link>,
-                           // <EditOutlined key="edit" />,
                         ]}
                         >
                         <Meta

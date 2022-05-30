@@ -14,7 +14,7 @@ import styles from '../styles/index.module.scss';
 const Index = () => {
   const { Meta } = Card;
   const [cards, setCards] = useState([]);
-  const {maps_owned} = useSelector(state => state.user);
+  const {maps_owned, active_maps, actual_flag} = useSelector(state => state.user);
   const [isLoading, setIsLoading] = useState(false);
 
   /*This is the method that will be executed when the component is mounted*/
@@ -44,6 +44,17 @@ const Index = () => {
       openNotification({msg: "Error", description: "There aren't maps available."})
   }, []);
 
+  //TODO:forEach instead of map
+  const getIndexOfFlag = (maps, thisMap) => {
+    let idx = -1;
+    maps.map((singleMap, index) => {
+      if (singleMap._id == thisMap._id) {
+        idx = index;
+      }
+    });
+    return idx;
+  };
+
   return(
     <MainLayout>
 
@@ -64,12 +75,12 @@ We invite you to browse through our pages, where you can find the different opti
       :
     /*We use the Row and Col components from ant design to display the map cards in a grid*/
    <Row gutter={[12,32]} >
-   {/* <ul> */}
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
       cards.map((card, index) => (
         <Col className="gutter-row" span={24} key={index}>
         <Card
+          key={index}
           style={{ width: 300 }}
           bordered={true}
           cover={
@@ -82,13 +93,17 @@ We invite you to browse through our pages, where you can find the different opti
             />
           }
           actions={[
-            maps_owned && maps_owned.find( map => map._id === card._id ) ?
+            active_maps && getIndexOfFlag(active_maps, card) !== -1 && actual_flag[getIndexOfFlag(active_maps, card)] !== null ?
+              <Link href={`/map/${card._id}/play/${actual_flag[getIndexOfFlag(active_maps, card)]._id  }`}>
+                <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
+              </Link>
+            :
+              <Link href={`/map/${card._id}/play`}>
+                <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
+              </Link>,
+            maps_owned && maps_owned.find( map => map._id === card._id ) &&
                 <Link href={`/map/${card._id}/edit`}>
                     <a>{<SettingOutlined key="setting" alt="Edit map"/>}</a>
-                </Link>
-            :
-                <Link href={`/map/${card._id}/play`}>
-                    <a>{ <PlaySquareOutlined key="play" alt="Start map" />}</a>
                 </Link>
           ]}
         >
