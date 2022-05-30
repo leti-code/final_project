@@ -125,33 +125,26 @@ const Edit = ({id}) => {
       {
         title: 'Question',
         dataIndex: 'question',
-        // width: "50px",
       },
       {
         title: 'Correct answer',
         dataIndex: 'answer',
-        // width: "50px",
       },
       {
         title: 'Score',
         dataIndex: 'score',
-        // width: "50px",
-
       },
       {
         title: 'Next clue',
         dataIndex: 'clue',
-        // width: "50px",
       },
       {
         title: 'Edit flag',
         dataIndex: 'edit',
-        // width: "20px",
       },
       {
-        title: 'Download flag QR',
+        title: 'Flag QR',
         dataIndex: 'download',
-        // width: "20px",
       }
     ];
 
@@ -271,7 +264,7 @@ const Edit = ({id}) => {
                     />
                 </Form.Item>
 
-                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }}/>
+                <Table columns={columns} width={400} scroll={{x: 400}} dataSource={tableData} pagination={{ pageSize: 5 }} />
 
                 <Modal_flag_creation_window mapId={id}
                   butText="Add a new Flag"

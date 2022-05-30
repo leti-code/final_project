@@ -96,7 +96,6 @@ const Modal_flag_creation_window = ({butText, title, mapId, hasFlagChanged, setH
                 </Button>,
               ]}
         >
-            <p>El mapa al que pertenezco es {mapId}</p>
             <Form
             form={form}
             onFinish={handleOk}
@@ -177,7 +176,6 @@ const Modal_flag_creation_window = ({butText, title, mapId, hasFlagChanged, setH
                     />
                 </Form.Item>
                 <Form.Item
-                    //TODO: different scores pending the times tried
                     label="Score of the answer"
                     name="score"
                     tooltip="Insert the score that the player will receive when answer propertly [0-1000]" 

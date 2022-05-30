@@ -104,7 +104,6 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
                 method='POST'
                 scrollToFirstError
                 >
-                    <Space size="large" className={styles.spacingImages} >
                         <Avatar size={150} shape="square" src={flag.img ? flag.img : "/defaultFlag.png"}/>
                         <Modal_update_image
                             butText={<EditOutlined/>}
@@ -112,9 +111,8 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
                             preset="map_image"
                             setNewImg={(img) => saveInDatabase(img)}    
                         />
-                        <DownloadButton src={qrSrc} name={`Flag ${indexOfFlag+1}(${flag._id})`}/>
                         <Avatar size={150} shape="square" src={qrSrc}/>
-                    </Space>
+                        <DownloadButton src={qrSrc} name={`Flag ${indexOfFlag+1}(${flag._id})`}/>
                     <Form.Item
                         label="Question"
                         name="question"
@@ -189,7 +187,6 @@ const Modal_flag_update_window = ({butText, title, flagToUpdate, indexOfFlag, qr
                         />
                     </Form.Item>
                     <Form.Item
-                        //TODO: different scores pending the times tried
                         label="Score of the answer"
                         name="score"
                         tooltip="Insert the score that the player will receive when answer propertly [0-1000]" 
