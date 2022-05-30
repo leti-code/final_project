@@ -26,7 +26,11 @@ const FlagSchema = new mongoose.Schema({
     },
     img: {
         type: String
-    }
+    },
+    who_has_hit_this_flag: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
 });
 
 export default mongoose.models.Flag || mongoose.model('Flag', FlagSchema);

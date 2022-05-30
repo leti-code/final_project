@@ -63,8 +63,33 @@ const PlayFlag = ({id, flag}) => {
         getMap(newToken);
     }, []);
 
-   const checkTheAnswer = (answer) => {
+   const checkTheAnswer = async (answer) => {
       console.log("Esta es la respuesta marcada: ", answer);
+      const res = await fetch(`/api/flag/${flag}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${window.localStorage.getItem("byb_token")}`
+        },
+        body: JSON.stringify({
+          option: answer,
+          map: id
+        })
+      });
+
+      const {success, error, nextClue, isLastFlag, scoreAdded} = await res.json();
+      if(success && nextClue ) {
+      console.log("Esta es la respuesta: ", success);
+      console.log("sig pista/", nextClue, "/isLastFlag: ", isLastFlag);
+      //TODO: mostrar respuesta correcta!! y los puntos que suma
+      //Al cerrar el modal mostrar siguiente pista + pista o fin del juego + mensaje final
+    }
+      if(error){
+        openNotification({msg: "Error", description: error});
+      } else {
+        openNotification({msg: "Success!", description: "You have answered correctly!"});
+      }
+
     };
    
   return (
