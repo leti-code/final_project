@@ -3,7 +3,6 @@ import Flag from "@models/Flag";
 import User from "@models/User";
 import db from "@lib/dbConnect";
 import protect from "../user/middleware";
-// import userController from "../user";
 
 const singleFlagController = async (req, res) => {
     switch (req.method) {
@@ -25,8 +24,9 @@ const singleFlagController = async (req, res) => {
             const optionSelected = req.body.option;
             if (myFlag.who_has_hit_this_flag && myFlag.who_has_hit_this_flag.includes(req.user._id)) {
                 return res.status(200).json({
-                    success: false,
-                    error: "You have already hit this flag. Please, try to find next QR code"
+                    success: true,
+                    error: "You have already hit this flag. Please, try to find next QR code",
+                    nextClue: myFlag.clueToNextFlag,
                 });
             }else {
                 if (optionSelected === myFlag.correctAnswer) {
@@ -62,7 +62,7 @@ const singleFlagController = async (req, res) => {
                 } else {
                     return res.status(200).json({
                         success: false,
-                        error: "Wrong answer"
+                        error: "Wrong answer. Try again!"
                     });
                 }
             }

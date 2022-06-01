@@ -1,5 +1,5 @@
 import openNotification from "@components/common/notification";
-import {Button, Spin, Radio, Divider, Empty, Avatar, Card} from 'antd';
+import {Button, Spin, Radio, Alert, Empty, Card} from 'antd';
 import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { useEffect, useState } from "react";
@@ -22,6 +22,9 @@ export async function getServerSideProps(context) {
 const PlayFlag = ({id, flag}) => {
     const [flagInfo, setFlagInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [nextClue, setNextClue] = useState(null);
+    const [hasFinishedMap, setHasFinishedMap] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -61,10 +64,9 @@ const PlayFlag = ({id, flag}) => {
         };
         const newToken = window.localStorage.getItem("byb_token");
         getMap(newToken);
-    }, []);
+    }, [isCorrect]);
 
    const checkTheAnswer = async (answer) => {
-      console.log("Esta es la respuesta marcada: ", answer);
       const res = await fetch(`/api/flag/${flag}`, {
         method: 'PUT',
         headers: {
@@ -78,24 +80,26 @@ const PlayFlag = ({id, flag}) => {
       });
 
       const {success, error, nextClue, isLastFlag, scoreAdded} = await res.json();
-      if(success && nextClue ) {
-      console.log("Esta es la respuesta: ", success);
-      console.log("sig pista/", nextClue, "/isLastFlag: ", isLastFlag);
-      //TODO: mostrar respuesta correcta!! y los puntos que suma
-      //Al cerrar el modal mostrar siguiente pista + pista o fin del juego + mensaje final
-    }
-      if(error){
-        openNotification({msg: "Error", description: error});
-      } else {
-        openNotification({msg: "Success!", description: "You have answered correctly!"});
+      if(!success){
+        openNotification({msg: "Ohh!!", description: error});
+      } else if(success && nextClue ) {
+        setIsCorrect(true);
+        setNextClue(nextClue);
+        if(error)
+          openNotification({msg: "Watch out!", description: error});
+        else
+          openNotification({msg: "Correct!", description: "You have earned " + scoreAdded + " points"});
+        if(isLastFlag) {
+          setHasFinishedMap(true);
+          openNotification({msg: "Congratulations!", description: "You have finished the map!"});
+        }
       }
-
     };
    
   return (
     <div className ={styles.background}>
          <div className={styles.backButton}>
-             <Button danger type="primary" onClick={() => router.push("/") /*TODO: que salte un alert avisando */} icon={<CloseOutlined />}/>
+             <Button danger type="primary" onClick={() => router.push("/")} icon={<CloseOutlined />}/>
          </div>
        {isLoading ? 
       <div className={styles.loading}>
@@ -105,7 +109,6 @@ const PlayFlag = ({id, flag}) => {
       <>
        {flagInfo ?
       <>
-       {/* <Divider orientation="center">{mapInfo.mapname}</Divider> */}
        <p>Here you will find the cuestion you must answer. Once you have the right answer you will receive the next clue.</p>
        { 
         flagInfo.img &&
@@ -147,6 +150,13 @@ const PlayFlag = ({id, flag}) => {
             })
             } 
           </Radio.Group>
+          { isCorrect && nextClue &&
+            <div className={styles.nextClue}>
+              {hasFinishedMap ? <strong>Congrats!! You have finish!</strong> : <strong>Next clue:</strong>}
+              <p>{nextClue}</p>
+            </div>
+          }
+          <div className="nextClue"></div>
              </>
              : <Empty />
              }
