@@ -1,75 +1,34 @@
-# MongoDB and Mongoose with Next.js
+# Guía técnica y de instalación.
+En primer, lugar vamos a mostrar el proceso de instalación del código fuente, las dependencias y lo relativo a APIs externas. Finalmente hablaremos brevemente de la estructura del proyecto para facilitar tareas de mantenimiento y de mejora.
 
-This example shows how you can use a MongoDB database to support your Next.js application.
 
-**Pet** is an application that allows users to add their pets' information (e.g., name, owner's name, diet, age, dislikes, likes, and photo). They can also delete it or edit it anytime.
+## Instalación.
 
-## Deploy your own
+1.	Una vez aquí pulsamos el botón verde “Code” y encontramos diferentes opciones para descargarse el repositorio. 
 
-Once you have access to [the environment variables you'll need](#step-2-set-up-environment-variables), deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+En este ejemplo vamos a emplear la consola (bash o powershell) para realizar todo el proceso, por lo que únicamente necesitamos copiar el enlace https pulsando el botón de copiar.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose&project-name=with-mongodb-mongoose&repository-name=with-mongodb-mongoose&env=MONGODB_URI&envDescription=Required%20to%20connect%20the%20app%20with%20MongoDB&envLink=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose%23step-2-set-up-environment-variables)
+2.	Acceder a la consola de comandos y poner el comando ```git clone``` seguido del enlace previamente copiado, al ser un repositorio público no solicitará contraseña:
+    ``` git clone https://github.com/leti-code/final_project.git```
+ 
+3.	Accedemos al directorio del proyecto e instalamos las dependencias con el comando ```yarn install```. De este modo, todas las dependencias que aparecen en el package.json son instaladas automáticamente.
+    ```yarn install```
+ 
 
-## How to use
+## Uso de APIs externas.
+En este proyecto se realizan llamadas a distintas APIs externas, algunas de las cuales requieren registro y por lo tanto necesitan credenciales también llamadas apikey al realizar la llamada.  Concretamente:
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+-	MongoDB Atlas: permite alojar en un servidor web nuestra base de datos no relacional. Para poder realizar la conexión es necesaria una url (URI) que incluye en el path las credenciales mencionadas. Además, pueden existir diferentes urls, que darían acceso a distintas bases de datos (en mi caso hay una para desarrollo para poder hacer pruebas y otra en producción para la aplicación ya usable por los usuarios).
 
-```bash
-npx create-next-app --example with-mongodb-mongoose with-mongodb-mongoose-app
-# or
-yarn create next-app --example with-mongodb-mongoose with-mongodb-mongoose-app
-```
+-	Cloudinary: es una API que permite guardar imágenes en un servidor web. Con las llamadas a la API podemos subir o descargar imágenes
+Para evitar tener que dar mis claves privadas, el proyecto ha sido desplegado en un servidor web, Vercel, que permite acceder al resultado de la app directamente a través del navegador. El enlace para ver el resultado es https://final-project-sandy.vercel.app/
+Aun así, por si el objetivo de descargar el repositorio fuera poder desplegarlo en local, he añadido una plantilla de las variables de entorno que requiere el proyecto.
+ 
 
-## Configuration
+Tal y como se explica, lo que habría que hacer es sustituir las definiciones que aparecen a la derecha del = por tus propias claves o urls. Además de las credenciales, también podemos encontrar alguna variable como JWT_SECRET que es el secreto que se le añade a la información que queremos encriptar con la librería jwt.
 
-### Step 1. Get the connection string of your MongoDB server
+Una vez todas estas variables de entorno hayan sido adecuadamente completadas, debemos eliminar del título del archivo el “.template” de modo que se llame únicamente “.env” para que al lanzar el programa sea capaz de localizarlo. En caso de no tener las credenciales y requerir para la corrección mis claves privadas, ruego se pongan en contacto conmigo (para evitar al menos que las claves queden reflejadas en el trabajo escrito) y se las proporcionaré de manera privada.
 
-In the case of MongoDB Atlas, it should be a string like this:
-
-```
-mongodb+srv://<username>:<password>@my-project-abc123.mongodb.net/test?retryWrites=true&w=majority
-```
-
-For more details, follow this [MongoDB Guide](https://docs.mongodb.com/guides/server/drivers/) on how to connect to MongoDB.
-
-### Step 2. Set up environment variables
-
-Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
-
-```bash
-cp .env.local.example .env.local
-```
-
-Then set each variable on `.env.local`:
-
-- `MONGODB_URI` should be the MongoDB connection string you got from step 1.
-
-### Step 3. Run Next.js in development mode
-
-```bash
-npm install
-npm run dev
-
-# or
-
-yarn install
-yarn dev
-```
-
-Your app should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
-
-## Deploy on Vercel
-
-You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-#### Deploy Your Local Project
-
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/import/git?utm_source=github&utm_medium=readme&utm_campaign=next-example).
-
-**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
-
-#### Deploy from Our Template
-
-Alternatively, you can deploy using our template by clicking on the Deploy button below.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose&project-name=with-mongodb-mongoose&repository-name=with-mongodb-mongoose&env=MONGODB_URI&envDescription=Required%20to%20connect%20the%20app%20with%20MongoDB&envLink=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose%23step-2-set-up-environment-variables)
+Con todo ello, si queremos desplegar en local y hemos rellenado correctamente todas las variables de entorno, será suficiente con el comando “yarn dev” para que la aplicación empiece a funcionar en local para poder hacer nuestras pruebas y/o mejoras de código
+ 
+Tal y como se ve en la imagen, aparecerá en la línea de comandos en qué puerto se está desplegando nuestra aplicación.
