@@ -1,5 +1,9 @@
 @import './colors.scss';
 
+.paragraph {
+    margin: 3vh; 
+}
+
 .editMapComponent {
     overflow: hidden; 
     margin-top: 5%;
@@ -13,7 +17,7 @@
 }
 
 .loading {
-    padding-left: 47%;
+    padding-left: 40%;
     padding-top: 10%;
     position: fixed;
     width: 100%;
@@ -28,7 +32,9 @@
 }
 
 .spacingImages {
-    padding-bottom: 5%;
+    padding-bottom: 3vh;
 }
 
-//TODO: refactor into more general styles (in app)
+.submitButton {
+    margin-top: 3vh;
+}

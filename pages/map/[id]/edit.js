@@ -63,7 +63,6 @@ const Edit = ({id}) => {
 
     const onFinish = async () => {
       const newToken = window.localStorage.getItem("byb_token");
-      //TODO: check if getting the token like this is correct
       try {
         const res = await fetch(`/api/map/${id}`, {
           method: "PUT",
@@ -160,7 +159,7 @@ const Edit = ({id}) => {
           edit: 
            <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
                     butText={<EditFilled />}
-                    title="Change the information you want to update"
+                    title="Change information you want to update"
                     indexOfFlag={i}
                     qrSrc={baseUrl + myPage + mapInfo.flags[i]._id}
                     setHasFlagChanged={setHasFlagChanged}
@@ -181,7 +180,7 @@ const Edit = ({id}) => {
       : 
       <>
       <Divider orientation="left">Map page</Divider>
-      <p>Here you can find the full information provided to your map. You can also edit it and add new flags.</p>
+      <p className={styles.paragraph}>Here you can find the full information provided to your map. You can also edit it and add new flags.</p>
       {mapInfo ?
       <Form
         {...formItemLayout}
@@ -273,7 +272,8 @@ const Edit = ({id}) => {
                   hasFlagChanged={hasFlagChanged}
                 />
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" disabled={hasValuesChanged ? false : true}>
+                    <Button type="primary" htmlType="submit" className={styles.submitButton}
+                     disabled={hasValuesChanged ? false : true}>
                         Update your map
                     </Button>
                 </Form.Item>

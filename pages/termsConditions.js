@@ -7,7 +7,7 @@ const TermsConditions = () => {
   
     const styles = {
         margin: '3%',
-        paddingBottom: '5%',
+        paddingBottom: '10%',
     }
 
   const router = useRouter();

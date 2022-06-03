@@ -30,6 +30,23 @@
     margin-right: 5%;
 }
 
+.loading {
+    padding-left: 40%;
+    padding-top: 10%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    .spinIcon {
+        font-size: 75px;
+        color: $primary-color;
+    }
+}
+
+.paragraph {
+    margin: 3vh; 
+}
+
 .flagImage  {
     margin-left: 2.3vh;
     margin-bottom: 1vh;

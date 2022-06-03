@@ -58,13 +58,13 @@ const Index = () => {
   return(
     <MainLayout>
 
-      {/*TODO: little description of the app */}
     <Divider orientation='="left'>Welcome to ByB!</Divider>
-    <p>Welcome to Break your Brain. This is an application designed for its users to create game maps and play existing maps.
-To play or create you need to be registered (you can find the link in the menu), which will open the doors to hours of endless fun.
-The game maps are the classic game of clues, each of which allows you to find a point on the map. At this point you will find a question with several answers and if you get it right you will be awarded a score and provided with the next clue to find the next point.
-We invite you to browse through our pages, where you can find the different options of our application.
-</p>
+    <p className={styles.paragraph}>
+      Welcome to Break your Brain. This is an application designed for its users to create game maps and play existing maps.
+      To play or create you need to be registered (you can find the link in the menu), which will open the doors to hours of endless fun.
+      The game maps are the classic game of clues, each of which allows you to find a point on the map. At this point you will find a question with several answers and if you get it right you will be awarded a score and provided with the next clue to find the next point.
+      We invite you to browse through our pages, where you can find the different options of our application.
+    </p>
 
     <Divider orientation="left">See our maps and play</Divider>
     {
@@ -80,6 +80,7 @@ We invite you to browse through our pages, where you can find the different opti
       cards.map((card, index) => (
         <Col className="gutter-row" span={24} key={index}>
         <Card
+          className={styles.singleCard}
           key={index}
           style={{ width: 300 }}
           bordered={true}

@@ -109,7 +109,7 @@ const PlayFlag = ({id, flag}) => {
       <>
        {flagInfo ?
       <>
-       <p>Here you will find the cuestion you must answer. Once you have the right answer you will receive the next clue.</p>
+       <p className={styles.paragraph}>Here you will find the cuestion you must answer. Once you have the right answer you will receive the next clue.</p>
        { 
         flagInfo.img &&
         <div className={styles.flagImage}>

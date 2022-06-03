@@ -26,8 +26,7 @@ const Play = ({id}) => {
     const setTheGame = async () => {
       console.log("I'm setting on user profile this map");
       try {
-        //TODO: necesito pasarle el id del usuario y el id del mapa (eso ya se lo pasamos)
-        //de modo que pueda hacer push en el array correspondiente del usuario y setear los otros valores
+        //de este modo puede hacer push en el array correspondiente del usuario y setear los otros valores
         //(score -1 y flag undefined)
         const res = await fetch('/api/play', {
           method: 'POST',
@@ -78,6 +77,9 @@ const Play = ({id}) => {
    
   return (
     <div className ={styles.background}>
+      <div className={styles.backButton}>
+        <Button danger type="primary" onClick={() => router.push("/")} icon={<CloseOutlined />}/>
+      </div>
       {isLoading ? 
       <div className={styles.loading}>
       <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
@@ -86,11 +88,9 @@ const Play = ({id}) => {
       <>
       {mapInfo ?
         <>
-        <div className={styles.backButton}>
-            <Button danger type="primary" onClick={() => router.push("/") /*TODO: que salte un alert avisando */} icon={<CloseOutlined />}/>
-        </div>
+    
         <Divider orientation="center">{mapInfo.mapname}</Divider>
-        <p>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
+        <p className={styles.paragraph}>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
 Once you decipher the clue, go to the place it indicates to find the QR code, scan it with any QR scanner application, access the QR link and the first question will appear on your screen.</p>
             <div className={styles.cardFirstClue}>
             {mapInfo.firstClue}

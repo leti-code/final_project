@@ -106,12 +106,14 @@ const login = () => {
         <Button type="primary" htmlType="submit" className={styles.submitButton}>
           Submit
         </Button>
-        Not registered? Go to 
-        <Link href="/register">
-        <a> registry</a>
-        </Link>
       </Form.Item>
       </Form>
+        <div className={styles.registry}>
+          Not registered? Go to 
+          <Link href="/register">
+            <a> registry</a>
+          </Link>
+        </div>
     </MainLayout>
   )
 }

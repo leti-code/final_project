@@ -13,13 +13,11 @@ import { useSelector } from 'react-redux';
 
 
 const createMap = () => {
-    //TOENHACE: posibility of put this url as an env variable
     const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
     const router = useRouter();
-      const {/*logged, */token} = useSelector(state => state.user);
+      const {token} = useSelector(state => state.user);
 
 
-    //TOENHACE: use midd or something to see if it's a valid user
     useEffect(() => {
         if (!window.localStorage.getItem("byb_token")) {
             openNotification({msg: "Error", description: "You are not logged in. Please login first."});
@@ -102,7 +100,7 @@ const createMap = () => {
            const {error} = json;
            if (error) throw error;
            openNotification({msg: "Success!", description: "Your map has been created. Now create some flags!"});
-            router.push(`/map/${json.map._id}/edit`); //TODO: go to createFlag
+            router.push(`/map/${json.map._id}/edit`);
          }catch(er){
            console.log({er})
            openNotification({msg: "Error", description: er});

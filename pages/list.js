@@ -60,10 +60,11 @@ const ListOfMaps = () => {
   return(
     <MainLayout>
     <Divider orientation="left">Our maps</Divider>
-    <p>On this page you will find a list of all maps available for play.
-On each of the cards you will see the description of the game and an icon that you can click on.
-If the map has been created by you, the icon is a gear that will give you access to the configuration of your map so you can modify it, as well as get the QRs needed to find each flag or stop. Otherwise, the icon is a play and pressing it the game will start, being registered in your user profile.
-</p>
+    <p className={styles.paragraph}>
+      On this page you will find a list of all maps available for play.
+      On each of the cards you will see the description of the game and an icon that you can click on.
+      If the map has been created by you, the icon is a gear that will give you access to the configuration of your map so you can modify it, as well as get the QRs needed to find each flag or stop. Otherwise, the icon is a play and pressing it the game will start, being registered in your user profile.
+    </p>
     <Divider orientation="left">Choose a map and play!</Divider>
     {
       isLoading ?
@@ -78,6 +79,7 @@ If the map has been created by you, the icon is a gear that will give you access
       cards.map((card, index) => (
         <Col className="gutter-row" span={24} key={index}>
         <Card
+          className={styles.singleCard}
           key={index}
           style={{ width: 300 }}
           bordered={true}

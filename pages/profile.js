@@ -148,7 +148,6 @@ const Profile = () => {
                 userInfo &&
                 <>
                     <Divider orientation="left">User profile</Divider>
-                    <hr/>
                     <div>
                     <Avatar size={250} src={userInfo.img ? userInfo.img : "/userDefault.png"}/>
                     {/* //TODO: make a button to edit the image */}
@@ -171,6 +170,7 @@ const Profile = () => {
                     userInfo.maps_owned.map((card, index) => (
                         <Col className="gutter-row" span={24}>
                         <Card
+                        className={styles.singleCard}
                         key={index}
                         style={{ width: 300 }}
                         bordered={true}
