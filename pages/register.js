@@ -85,7 +85,6 @@ const register = () => {
         openNotification({msg: "Success!", description: "You have been registered. Log in to start!"});
         router.push("./login");
       }catch(er){
-        console.log({er})
         openNotification({msg: "Error", description: er});
       }
     };

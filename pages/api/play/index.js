@@ -88,7 +88,6 @@ const gameController = async (req, res) => {
                 // si es una pista antigua no se actualiza
                 if (posMap !== -1 && posNewFlag !== -1 && (posOldFlag === -1 || ((posOldFlag + 1) === posNewFlag))) {
                     user.actual_flag[posMap] = req.body.flag_id;
-                    console.log("Flags :D", user.actual_flag);
                     const updateUser = await User.findByIdAndUpdate(
                         { _id: req.user._id },
                         {

@@ -11,7 +11,6 @@ const singleFlagController = async (req, res) => {
             await db();
             const singleFlag = await Flag.findById(req.query.flag).select(['question', 'answer', 'img']);
             if (!singleFlag) return  res.status(404).json({ success: false, error: "Flag not found" });
-            console.log(singleFlag);
             return res.status(200).json({
                 success: true,
                 singleFlag
@@ -30,7 +29,6 @@ const singleFlagController = async (req, res) => {
                 });
             }else {
                 if (optionSelected === myFlag.correctAnswer) {
-                    console.log("Has acertado");
                     if(myFlag.who_has_hit_this_flag && myFlag.who_has_hit_this_flag.length > 0){
                         myFlag.who_has_hit_this_flag.push(req.user._id);
                         await myFlag.save();
@@ -41,7 +39,6 @@ const singleFlagController = async (req, res) => {
                                 who_has_hit_this_flag: [req.user._id],
                             },
                             {new: true});
-                        console.log("updatedFlag", updatedFlag);
                     }
                     const user = await User.findById(req.user._id);
                     let pos = user.actual_flag.indexOf(req.query.flag);

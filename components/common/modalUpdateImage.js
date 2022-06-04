@@ -28,7 +28,6 @@ const Modal_update_image = ({butText, title, preset, setNewImg}) => {
 
     const handleOk = async () => {
         try {
-            console.log("subiendo nueva imagen");
             const formData = new FormData();
             formData.append('file', img);
             formData.append("upload_preset", preset);

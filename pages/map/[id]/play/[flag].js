@@ -30,7 +30,6 @@ const PlayFlag = ({id, flag}) => {
     useEffect(() => {
         async function getMap(token) {
             try {
-              console.log("Entramos aqui");
                 setIsLoading(true);
                 const res = await fetch(`/api/flag/${flag}`, {
                     method: 'GET',
@@ -41,7 +40,6 @@ const PlayFlag = ({id, flag}) => {
                 })
                 const {singleFlag} = await res.json();
                 setFlagInfo(singleFlag);
-                console.log("La info de la flag...",singleFlag);
                 setIsLoading(false);
                 const resUpdate = await fetch('/api/play/', {
                   method: 'PUT',

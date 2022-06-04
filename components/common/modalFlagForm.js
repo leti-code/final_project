@@ -65,14 +65,12 @@ const Modal_flag_creation_window = ({butText, title, mapId, hasFlagChanged, setH
             }),
           })
           const json = await res.json();
-          console.log(json);
           const {error} = json;
           if (error) throw error;
           setHasFlagChanged(!hasFlagChanged);
           openNotification({msg: "Success!", description: "Your flag has been registered!"});
           setIsModalVisible(false);
     }catch(er){
-          console.log({er})
           openNotification({msg: "Error", description: er});
     }
 

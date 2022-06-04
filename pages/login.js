@@ -55,7 +55,6 @@ const login = () => {
       //We redirect the user to the home page
       router.push("./");
     }catch(er){
-      console.log({er})
       openNotification({msg: "Error", description: er});
       /*If something goes wrong in the login, we set the user to null (no logged) */
       setUser(initialUser);
