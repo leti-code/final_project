@@ -152,10 +152,10 @@ const Edit = ({id}) => {
       for (let i = 0; i < mapInfo.flags.length; i++) {
         tableData.push({
           key: i,
-          question: mapInfo.flags[i].question,
-          answer: mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer],
+          question: mapInfo.flags[i].question.length > 40 ? mapInfo.flags[i].question.substr(0, 40) + "..." : mapInfo.flags[i].question,
+          answer: mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer].length > 40 ?mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer].substr(0, 40) + "..." : mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer],
           score: mapInfo.flags[i].score,
-          clue: mapInfo.flags[i].clueToNextFlag,
+          clue: mapInfo.flags[i].clueToNextFlag.length > 40 ? mapInfo.flags[i].clueToNextFlag.substr(0, 40) + "..." : mapInfo.flags[i].clueToNextFlag,
           edit: 
            <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
                     butText={<EditFilled />}
