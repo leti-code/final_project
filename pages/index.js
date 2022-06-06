@@ -14,7 +14,9 @@ import styles from '../styles/index.module.scss';
 const Index = () => {
   const { Meta } = Card;
   const [cards, setCards] = useState([]);
+  /*States to set the maps in the appropiate point(flag) and to know if the user is the owner or not */
   const {maps_owned, active_maps, actual_flag} = useSelector(state => state.user);
+  /*State to see if the information is loading */
   const [isLoading, setIsLoading] = useState(false);
 
   /*This is the method that will be executed when the component is mounted*/
@@ -31,9 +33,9 @@ const Index = () => {
         });
         const maps = await res.json();
         return maps;
-      }catch(er) {
+      } catch(er) {
         return({success: false, maps: null});
-      }finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -44,7 +46,7 @@ const Index = () => {
       openNotification({msg: "Error", description: "There aren't maps available."})
   }, []);
 
-  //TODO:forEach instead of map
+  /*Returns the index of the flag to make some checks */
   const getIndexOfFlag = (maps, thisMap) => {
     let idx = -1;
     maps.map((singleMap, index) => {
@@ -59,6 +61,7 @@ const Index = () => {
     <MainLayout>
 
     <Divider orientation='="left'>Welcome to ByB!</Divider>
+    {/*Small description about the app */}
     <p className={styles.paragraph}>
       Welcome to Break your Brain. This is an application designed for its users to create game maps and play existing maps.
       To play or create you need to be registered (you can find the link in the menu), which will open the doors to hours of endless fun.
@@ -68,12 +71,14 @@ const Index = () => {
 
     <Divider orientation="left">See our maps and play</Divider>
     {
+      //If the info is still loading, we show a loading icon to inform the user
       isLoading ?
       <div className={styles.loading}>
       <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
       </div> 
       :
-    /*We use the Row and Col components from ant design to display the map cards in a grid*/
+    /*We use the Row and Col components from ant design to display the map cards in a grid, as we decide a mobile first design, we only display 
+    a card per column, but it is prepared to change this config easily*/
    <Row gutter={[12,32]} >
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
@@ -94,6 +99,7 @@ const Index = () => {
             />
           }
           actions={[
+            //If we are not in the beginning of the map, we can route directly to the current flag
             active_maps && getIndexOfFlag(active_maps, card) !== -1 && actual_flag[getIndexOfFlag(active_maps, card)] !== null ?
               <Link href={`/map/${card._id}/play/${actual_flag[getIndexOfFlag(active_maps, card)]._id  }`}>
                 <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
@@ -102,6 +108,7 @@ const Index = () => {
               <Link href={`/map/${card._id}/play`}>
                 <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
               </Link>,
+            //If the user is the owner of the map, we can route to the map editor
             maps_owned && maps_owned.find( map => map._id === card._id ) &&
                 <Link href={`/map/${card._id}/edit`}>
                     <a>{<SettingOutlined key="setting" alt="Edit map"/>}</a>

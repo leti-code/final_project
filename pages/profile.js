@@ -102,7 +102,7 @@ const Profile = () => {
         },
       ];
     
-      /*Here we create the table (is a component from Ant Design) */
+    /*Here we create the table (is a component from Ant Design) */
     const tableData = [];
     if(userInfo){
         for (let i = 0; i < userInfo.active_maps.length; i++) {
@@ -119,6 +119,8 @@ const Profile = () => {
         }
     };
 
+    /*When we choose to update the image and the petition to Cloudinary has been successful, we save here the new url in the database
+    Basically we update the user document  */
     const saveInDatabase = async (img) => {
         try {
             const res = await fetch('/api/user/profile', {
@@ -150,7 +152,6 @@ const Profile = () => {
                     <Divider orientation="left">User profile</Divider>
                     <div>
                     <Avatar size={250} src={userInfo.img ? userInfo.img : "/userDefault.png"}/>
-                    {/* //TODO: make a button to edit the image */}
                     <Modal_update_image 
                         butText={<EditTwoTone/>}
                         title="Update your image. Choose a new one"

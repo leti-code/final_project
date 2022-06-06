@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        {/*This information is needed to set the PWA, required by browser and also by the library */}
         <meta name='application-name' content='Break your Brain' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
@@ -16,7 +17,6 @@ function MyApp({ Component, pageProps }) {
         <meta name='description' content='A new application to play, create your own maps and play with the available ones' />
         <meta name='format-detection' content='telephone=no' />
         <meta name='mobile-web-app-capable' content='yes' />
-        {/* <meta name='msapplication-config' content='/icons/browserconfig.xml' /> */}
         <meta name='msapplication-TileColor' content='#2B5797' />
         <meta name='msapplication-tap-highlight' content='no' />
         <meta name='theme-color' content='#000000' />
@@ -29,9 +29,7 @@ function MyApp({ Component, pageProps }) {
         <link rel='icon' type='image/png' sizes='32x32' href='/favicon.ico' />
         <link rel='icon' type='image/png' sizes='16x16' href='/favicon.ico' />
         <link rel='manifest' href='/manifest.json' />
-        {/* <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color='#5bbad5' /> */}
         <link rel='shortcut icon' href='/favicon.ico' />
-        {/* <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' /> */}
 
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:url' content='https://final-project-sandy.vercel.app/' />

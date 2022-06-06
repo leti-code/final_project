@@ -1,13 +1,13 @@
 import {React,useState } from 'react';
+import Link from 'next/link';
+import {useRouter} from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button} from 'antd';
 import styles from '../styles/login.module.scss';
 import { setLogged } from 'store/slices/user/user.slice';
-import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layouts/MainLayout';
-import {useRouter} from 'next/router';
 import openNotification from 'components/common/notification';
 import { useForm } from 'antd/lib/form/Form';
-import Link from 'next/link';
 
 
 const login = () => {
@@ -23,8 +23,9 @@ const login = () => {
   const [ user, setUser] = useState(initialUser);
   const [form] = useForm();
 
-  const onFinish = async () => {
+  const onFinish = async () => { //method called when we click the submit button
     try{
+      //Makes a request to the database to check if the user exists and the password match with the one saved.
       const res = await fetch('/api/user/login', {
         method: 'POST',
         headers: {

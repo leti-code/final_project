@@ -15,7 +15,9 @@ import styles from '../styles/index.module.scss';
 const ListOfMaps = () => {
   const { Meta } = Card;
   const [cards, setCards] = useState([]);
+  /*States to set the maps in the appropiate point(flag) and to know if the user is the owner or not */
   const {maps_owned, active_maps, actual_flag} = useSelector(state => state.user);
+  /*State to see if the information is loading */
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -33,9 +35,9 @@ const ListOfMaps = () => {
         });
         const maps = await res.json();
         return maps;
-      }catch(er) {
+      } catch(er) {
         return({success: false, maps: null});
-      }finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -46,7 +48,7 @@ const ListOfMaps = () => {
       openNotification({msg: "Error", description: "There aren't maps available."})
   }, []);
 
-    //TODO:forEach instead of map
+  /*Returns the index of the flag to make some checks */
   const getIndexOfFlag = (maps, thisMap) => {
     let idx = -1;
     maps.map((singleMap, index) => {
@@ -60,6 +62,7 @@ const ListOfMaps = () => {
   return(
     <MainLayout>
     <Divider orientation="left">Our maps</Divider>
+    {/*Some instructions about how to start playing*/}
     <p className={styles.paragraph}>
       On this page you will find a list of all maps available for play.
       On each of the cards you will see the description of the game and an icon that you can click on.
@@ -67,12 +70,14 @@ const ListOfMaps = () => {
     </p>
     <Divider orientation="left">Choose a map and play!</Divider>
     {
+      //If the info is still loading, we show a loading icon to inform the user
       isLoading ?
       <div className={styles.loading}>
       <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
       </div> 
       :
-    /*We use the Row and Col components from ant design to display the map cards in a grid*/
+     /*We use the Row and Col components from ant design to display the map cards in a grid, as we decide a mobile first design, we only display 
+    a card per column, but it is prepared to change this config easily*/
     <Row gutter={[12,32]} >
     {
       /*We make a mapping of the array of maps and design with each one a card that displays the main map information */
@@ -93,6 +98,7 @@ const ListOfMaps = () => {
             />
           }
           actions={[
+            //If we are not in the beginning of the map, we can route directly to the current flag
             active_maps && getIndexOfFlag(active_maps, card) !== -1 && actual_flag[getIndexOfFlag(active_maps, card)] !== null ?
               <Link href={`/map/${card._id}/play/${actual_flag[getIndexOfFlag(active_maps, card)]._id  }`}>
                 <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
@@ -101,6 +107,7 @@ const ListOfMaps = () => {
               <Link href={`/map/${card._id}/play`}>
                 <a>{<PlaySquareOutlined key="play" alt="Start map" />}</a>
               </Link>,
+            //If the user is the owner of the map, we can route to the map editor
             maps_owned && maps_owned.find( map => map._id === card._id ) &&
                 <Link href={`/map/${card._id}/edit`}>
                     <a>{<SettingOutlined key="setting" alt="Edit map"/>}</a>
