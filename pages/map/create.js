@@ -106,9 +106,8 @@ const createMap = () => {
          }catch(er){
            console.log({er})
            openNotification({msg: "Error", description: er});
-         } finally {
            setIsCreating(false);
-         }
+         } 
       };
 
     /*Rendered component */

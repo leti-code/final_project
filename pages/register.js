@@ -88,7 +88,6 @@ const register = () => {
         openNotification({msg: "Success!", description: "You have been registered. Log in to start!"});
       }catch(er){
         openNotification({msg: "Error", description: er});
-      }finally {
         setIsCreating(false);
       }
     };
