@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 
+/*Generic modal, baseline to create another modals */
 /*Component import from Ant Design. It allows you to display a pop up window with some information and and "Accept" or "Cancel" option to continue or stop whatever proccess it refers */
 const Modal_window = ({butText, title, content}) => {
   /*State of the modal */
