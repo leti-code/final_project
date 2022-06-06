@@ -48,7 +48,7 @@ const Header = () => {
 
     /* The DropdownMenu is an a Ant Design graphic component, that displays an image/icon and works as a button and when you hover it, it shows all the menu items */
     const DropdownMenu = () => (
-    <Dropdown key="more" overlay={menu} placement="bottomRight">
+    <Dropdown key="myMenu" overlay={menu} placement="bottomRight">
         <Button type="text" icon={<MenuOutlined  style={{ fontSize: 20 }} />} />
     </Dropdown>
     );
@@ -58,7 +58,7 @@ const Header = () => {
     <PageHeader
         className={styles.headerComponent}
         extra={[
-            <DropdownMenu key="more" className={styles.dropDownMenu} />,
+            <DropdownMenu key="myMenu" className={styles.dropDownMenu} />,
         /*Here we find a Link element that routes into the home page, instead a text/button it is an image of the logo of the application */
         <Link href="/">
             <a className={styles.logo}>

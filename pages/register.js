@@ -195,8 +195,8 @@ const register = () => {
         >
           {/*Upload component from Ant Design that allows you to select from your file navigator a file */}
           <Upload 
-            // name="logo" 
-            // listType="picture" 
+            name="logo" 
+            listType="picture" 
             maxCount={1}  //you can set the max number of files you can select, in this case we only want one
             accept=".jpg, .png, .jpeg" //you can set the type of files you can select
             >
