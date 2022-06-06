@@ -1,8 +1,7 @@
 import openNotification from "@components/common/notification";
 import {Form, Input, Button, Spin, Divider, Empty, Avatar, Table} from 'antd';
-import { LoadingOutlined, EditTwoTone, EditFilled, CloudDownloadOutlined } from '@ant-design/icons';
+import { LoadingOutlined, EditTwoTone, EditFilled } from '@ant-design/icons';
 import { useForm } from 'antd/lib/form/Form';
-import { saveAs } from 'file-saver';
 
 import { useEffect, useState } from "react";
 import {useRouter} from 'next/router';
@@ -12,8 +11,6 @@ import Modal_flag_creation_window from "@components/common/modalFlagForm";
 import Modal_flag_update_window from "@components/common/modalFlagUpdate";
 import DownloadButton from "@components/common/downloadButton";
 import Modal_update_image from "@components/common/modalUpdateImage";
-
-
 
 export async function getServerSideProps(context) {
     const { id } = context.params;
@@ -26,6 +23,7 @@ export async function getServerSideProps(context) {
 const Edit = ({id}) => {
     const [mapInfo, setMapInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
     const [hasValuesChanged, setHasValuesChanged] = useState(false);
     const router = useRouter();
     const [form] = useForm();
@@ -64,6 +62,7 @@ const Edit = ({id}) => {
     const onFinish = async () => {
       const newToken = window.localStorage.getItem("byb_token");
       try {
+        setIsUpdating(true);
         const res = await fetch(`/api/map/${id}`, {
           method: "PUT",
           headers: {
@@ -75,6 +74,8 @@ const Edit = ({id}) => {
         openNotification({msg:"Success!", description: "Your map has been updated!"});
       } catch (er) {
         openNotification({msg: "Error", description: "Something went wrong! Make sure the map exists, that you are the owner and try it later"});
+      } finally {
+        setIsUpdating(false);
       }
     };
 
@@ -272,10 +273,17 @@ const Edit = ({id}) => {
                   hasFlagChanged={hasFlagChanged}
                 />
                 <Form.Item {...tailFormItemLayout}>
+                  {
+                    isUpdating ?
+                    <Button type="primary" htmlType="submit" disabled>
+                      <Spin indicator={<LoadingOutlined/>}/> 
+                    </Button>
+                    :
                     <Button type="primary" htmlType="submit" className={styles.submitButton}
                      disabled={hasValuesChanged ? false : true}>
                         Update your map
                     </Button>
+                  }
                 </Form.Item>
             </Form> 
             : <Empty />

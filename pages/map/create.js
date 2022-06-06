@@ -1,8 +1,8 @@
 import {useState, useEffect } from 'react';
-import {Form, Input, Button, Upload} from 'antd';
+import {Form, Input, Button, Upload, Spin} from 'antd';
 import {useRouter} from 'next/router';
 import { useForm } from 'antd/lib/form/Form';
-import { UploadOutlined} from '@ant-design/icons';
+import { UploadOutlined, LoadingOutlined} from '@ant-design/icons';
 
 import MainLayout from 'layouts/MainLayout';
 
@@ -58,12 +58,14 @@ const createMap = () => {
       };
 
       const [ map, setMap] = useState(initialMap);
+      const [isCreating, setIsCreating] = useState(false);
       const [form] = useForm();
       
 
       const onFinish = async () => {
         /*Function call when we submit the form */
           try{
+            setIsCreating(true);
             if (map.img) {
                /*First of all, we prepare the image to be upload to cloudinary (for security reasons we can't get directly the path of the upload file) */
                 const formData = new FormData();
@@ -99,11 +101,13 @@ const createMap = () => {
            const json = await res.json();
            const {error} = json;
            if (error) throw error;
+           router.push(`/map/${json.map._id}/edit`);
            openNotification({msg: "Success!", description: "Your map has been created. Now create some flags!"});
-            router.push(`/map/${json.map._id}/edit`);
          }catch(er){
            console.log({er})
            openNotification({msg: "Error", description: er});
+         } finally {
+           setIsCreating(false);
          }
       };
 
@@ -204,9 +208,16 @@ const createMap = () => {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
+                  {
+                    isCreating ? 
+                    <Button type="primary" htmlType="submit" disabled>
+                      <Spin indicator={<LoadingOutlined/>}/> 
+                    </Button> 
+                    :
                     <Button type="primary" htmlType="submit">
                         Create new map
                     </Button>
+                  }
                 </Form.Item>
             </Form>
         </MainLayout>

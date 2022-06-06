@@ -1,9 +1,9 @@
 import {useState } from 'react';
 import {useRouter} from 'next/router';
-import { Form, Input, Button, Checkbox, Upload} from 'antd';
+import { Form, Input, Button, Checkbox, Upload, Spin} from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import MainLayout from 'layouts/MainLayout';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, LoadingOutlined } from '@ant-design/icons';
 import styles from '../styles/register.module.scss';
 import openNotification from '@components/common/notification';
 
@@ -45,11 +45,13 @@ const register = () => {
     };
   
     const [ user, setUser] = useState(initialUser); //React useState to set the user in the front component
+    const [isCreating, setIsCreating] = useState(false); 
     const [form] = useForm();
         
     const onFinish = async () => { //method executed when we submit the form (with the button or pressing enter key)
       try{
 
+        setIsCreating(true);
         /*First of all, we prepare the image to be upload to cloudinary (for security reasons we can't get directly the path of the upload file) */
          const formData = new FormData();
          formData.append('file', user.img);
@@ -82,10 +84,12 @@ const register = () => {
         const json = await res.json();
         const {error} = json;
         if (error) throw error;
-        openNotification({msg: "Success!", description: "You have been registered. Log in to start!"});
         router.push("./login");
+        openNotification({msg: "Success!", description: "You have been registered. Log in to start!"});
       }catch(er){
         openNotification({msg: "Error", description: er});
+      }finally {
+        setIsCreating(false);
       }
     };
 
@@ -223,9 +227,16 @@ const register = () => {
 
         {/*Submit button */}
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-          Register
-          </Button>
+          {
+            isUpdating ?
+            <Button type="primary" htmlType="submit" disabled>
+              <Spin indicator={<LoadingOutlined/>}/> 
+            </Button>
+            :
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
+          }
         </Form.Item>
         </Form>
 
