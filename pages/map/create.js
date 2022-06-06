@@ -5,7 +5,6 @@ import { useForm } from 'antd/lib/form/Form';
 import { UploadOutlined, LoadingOutlined} from '@ant-design/icons';
 
 import MainLayout from 'layouts/MainLayout';
-
 import styles from '../../styles/createMap.module.scss';
 import openNotification from '@components/common/notification';
 import { useSelector } from 'react-redux';
@@ -15,10 +14,10 @@ import { useSelector } from 'react-redux';
 const createMap = () => {
     const url = "https://api.cloudinary.com/v1_1/bybsite/image/upload";
     const router = useRouter();
-      const {token} = useSelector(state => state.user);
+    const {token} = useSelector(state => state.user);
 
 
-    useEffect(() => {
+    useEffect(() => { //If the user is not logged, routes you into login page
         if (!window.localStorage.getItem("byb_token")) {
             openNotification({msg: "Error", description: "You are not logged in. Please login first."});
             router.push("/login");
@@ -58,6 +57,7 @@ const createMap = () => {
       };
 
       const [ map, setMap] = useState(initialMap);
+      /*State of creation to disable submit button while fetching */
       const [isCreating, setIsCreating] = useState(false);
       const [form] = useForm();
       

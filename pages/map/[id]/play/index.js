@@ -8,26 +8,28 @@ import styles from '../../../../styles/playInit.module.scss';
 import Footer from "@components/Footer";
 import { useSelector } from 'react-redux';
 
+/*This page uses a dynamic path, we need this function to get the id to complete the path */
 export async function getServerSideProps(context) {
     const { id } = context.params;
-    
     return {
       props: {id}, // will be passed to the page component as props
     }
   };
 
 const Play = ({id}) => {
-    const [mapInfo, setMapInfo] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
-    const [hasJoined, setHasJoined] = useState(false);
-    const {active_maps} = useSelector(state => state.user);
+  /*This page, becomes from a dynamic path and represent the first screen of the game of each map */
+  /*The main style difference is that in the game we don't use MainLayout, we only get the footer and an esc button to go back into home page */
 
+  const [mapInfo, setMapInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  /*State to enabled/disabled the button, to avoid that the same user join the same map more than once */
+  const [hasJoined, setHasJoined] = useState(false);
+  const {active_maps} = useSelector(state => state.user);
+
+  /*This function update the user document in the database, it add this map as an active_maps in user */
     const setTheGame = async () => {
-      console.log("I'm setting on user profile this map");
       try {
-        //de este modo puede hacer push en el array correspondiente del usuario y setear los otros valores
-        //(score -1 y flag undefined)
         const res = await fetch('/api/play', {
           method: 'POST',
           headers: {
@@ -50,7 +52,7 @@ const Play = ({id}) => {
       setHasJoined(true);
     };
 
-    useEffect(() => {
+    useEffect(() => { //gets info of map from database to display description and firstClue
         async function getMap(token) {
             try {
                 setIsLoading(true);
@@ -81,6 +83,7 @@ const Play = ({id}) => {
         <Button danger type="primary" onClick={() => router.push("/")} icon={<CloseOutlined />}/>
       </div>
       {isLoading ? 
+      //If the info of map is not loaded yet, show a loading animation
       <div className={styles.loading}>
       <Spin className ={styles.spinner} indicator={<LoadingOutlined className={styles.spinIcon}/>}/> 
       </div> 
@@ -90,6 +93,7 @@ const Play = ({id}) => {
         <>
     
         <Divider orientation="center">{mapInfo.mapname}</Divider>
+        {/*Instructions about how to start the game */}
         <p className={styles.paragraph}>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
 Once you decipher the clue, go to the place it indicates to find the QR code, scan it with any QR scanner application, access the QR link and the first question will appear on your screen.</p>
             <div className={styles.cardFirstClue}>
@@ -98,6 +102,7 @@ Once you decipher the clue, go to the place it indicates to find the QR code, sc
             <div className={styles.joinButton}>
             {
               hasJoined ?
+              //Displays a different button depending if the user has already joined the map or not
               <Button type="primary" disabled>Already playing this map</Button>
               :
               <Button type="primary" onClick={setTheGame}>Join this map!</Button>

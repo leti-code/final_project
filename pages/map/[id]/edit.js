@@ -12,15 +12,18 @@ import Modal_flag_update_window from "@components/common/modalFlagUpdate";
 import DownloadButton from "@components/common/downloadButton";
 import Modal_update_image from "@components/common/modalUpdateImage";
 
+/*This page uses a dynamic path, we need this function to get the id to complete the path */
 export async function getServerSideProps(context) {
-    const { id } = context.params;
-    
-    return {
-      props: {id}, // will be passed to the page component as props
-    }
-  };
+  const { id } = context.params;
+  return {
+    props: {id}, // will be passed to the page component as props
+  }
+};
 
 const Edit = ({id}) => {
+  /*This page is a map editor, it contents modals to create and update flags */
+
+    /*States of information, loadings, changes... */
     const [mapInfo, setMapInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -29,6 +32,7 @@ const Edit = ({id}) => {
     const [form] = useForm();
     const [hasFlagChanged, setHasFlagChanged] = useState(false);
 
+    /*Url of the QR server to allow the QR code creation */
     const baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
     const mainUrl = process.env.NODE_ENV == "development" ? "localhost:3000" : "final-project-sandy.vercel.app";
     const myPage = `https://${mainUrl}/map/${id}/play/`;
@@ -59,6 +63,7 @@ const Edit = ({id}) => {
     };
     /*End*/
 
+    /*This method update the info of the map in the database */
     const onFinish = async () => {
       const newToken = window.localStorage.getItem("byb_token");
       try {
@@ -79,6 +84,7 @@ const Edit = ({id}) => {
       }
     };
 
+    /*This method update the info of the map image in the database */
     const saveInDatabase = async (img) => {
       try {
           const res = await fetch(`/api/map/${id}`, {
@@ -97,7 +103,7 @@ const Edit = ({id}) => {
       }
   };
 
-    useEffect(() => {
+    useEffect(() => { //Called on mount gets the map information to display in the form fields
         async function getMap(token) {
             try {
                 setIsLoading(true);
@@ -120,7 +126,7 @@ const Edit = ({id}) => {
         getMap(newToken);
     }, [hasFlagChanged]);
 
-    /*This variable has the structure of tha table of the flags (all the stops a map has) */
+    /*This variable has the structure of the table of flags (all the stops a map has) */
     const columns = [
       {
         title: 'Question',
@@ -149,16 +155,19 @@ const Edit = ({id}) => {
     ];
 
     const tableData = [];
+    /*When we have already the info of the map we set the values of the table */
     if (isLoading === false && mapInfo) {
       for (let i = 0; i < mapInfo.flags.length; i++) {
         tableData.push({
           key: i,
+          //Some fields are cut if the length is too long, in that way we have more aesthetic tables of flags
           question: mapInfo.flags[i].question.length > 40 ? mapInfo.flags[i].question.substr(0, 40) + "..." : mapInfo.flags[i].question,
           answer: mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer].length > 40 ?mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer].substr(0, 40) + "..." : mapInfo.flags[i].answer[mapInfo.flags[i].correctAnswer],
           score: mapInfo.flags[i].score,
           clue: mapInfo.flags[i].clueToNextFlag.length > 40 ? mapInfo.flags[i].clueToNextFlag.substr(0, 40) + "..." : mapInfo.flags[i].clueToNextFlag,
           edit: 
-           <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
+            //Modal to update flag information
+          <Modal_flag_update_window flagToUpdate={mapInfo.flags[i]} 
                     butText={<EditFilled />}
                     title="Change information you want to update"
                     indexOfFlag={i}
@@ -167,6 +176,7 @@ const Edit = ({id}) => {
                     hasFlagChanged={hasFlagChanged}
             />,
           download: 
+            //Button to download QR code of the flag
             <DownloadButton src ={baseUrl + myPage + mapInfo.flags[i]._id} name={`Flag ${i+1}(${mapInfo.flags[i]._id})`}/>
         });
 
