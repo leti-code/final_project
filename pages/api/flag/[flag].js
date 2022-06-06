@@ -6,8 +6,8 @@ import protect from "../user/middleware";
 
 const singleFlagController = async (req, res) => {
     switch (req.method) {
-        //Provides the information of a flag to display in the game screen
         case "GET":
+            //Provides the information of a flag to display in the game screen
             await db();
             const singleFlag = await Flag.findById(req.query.flag).select(['question', 'answer', 'img']);
             if (!singleFlag) return  res.status(404).json({ success: false, error: "Flag not found" });
@@ -15,9 +15,9 @@ const singleFlagController = async (req, res) => {
                 success: true,
                 singleFlag
             });
-        //Once the user select a possible answer, checks if it is correct or not and if this user has already hit it before
-        //Also updated the user score in case of a correct answer
-        case "PUT":
+            case "PUT":
+            //Once the user select a possible answer, checks if it is correct or not and if this user has already hit it before
+            //Also updated the user score in case of a correct answer
             await db();
             const myFlag = await Flag.findById(req.query.flag);
             const optionSelected = req.body.option;
@@ -71,4 +71,4 @@ const singleFlagController = async (req, res) => {
     }
 }
 
-export default protect (singleFlagController);
+export default protect (singleFlagController); //having the protect means that we have the middleware between the client request and server answer.

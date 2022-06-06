@@ -8,7 +8,7 @@ const listMapController = async (req, res) => {
         /*This method without middleware makes a select to the colection of Maps, that allows us to list all the maps already created*/
         case "GET":
             await db();
-            const maps = await Map.find({})//.populate('flags');
+            const maps = await Map.find({});
             return res.status(200).json({
                 success: true,
                 maps

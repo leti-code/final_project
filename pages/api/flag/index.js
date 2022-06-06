@@ -4,14 +4,8 @@ import db from "@lib/dbConnect";
 
 const flagController = async (req, res) => {
     switch (req.method) {
-        case "GET":
-            await db();
-            const flags = await Flag.find({});
-            return res.status(200).json({
-                success: true,
-                flags
-            });
         case "PUT":
+            /*Updates the information of the flag in the database */
             await db();
             const updatedFlag = await Flag.findByIdAndUpdate(
                 {_id: req.body.id},
@@ -30,6 +24,7 @@ const flagController = async (req, res) => {
                     updatedFlag
                 });
         case "PATCH":
+            /*Updates the image of the flag in the database */
             await db();
             const updatedFlag2 = await Flag.findByIdAndUpdate(
                 {_id: req.body.id},
@@ -43,6 +38,7 @@ const flagController = async (req, res) => {
                     updatedFlag2
                 });
         case "POST":
+            /*Adds a new flag to the database */
             try {
                 await db();
                 const flag = new Flag({
@@ -55,6 +51,7 @@ const flagController = async (req, res) => {
                 });
                 await flag.save();
 
+                /*Also updates the map with the new flag */
                 const map = await Map.findById(req.body.mapId);
                 await map.flags.push(flag);
                 await map.save();

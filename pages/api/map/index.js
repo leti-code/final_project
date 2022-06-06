@@ -40,4 +40,4 @@ const mapController = async (req, res) => {
     }
 }
 
-export default protect (mapController); //having the protect means that we have the middleware between the client request and service answer.
+export default protect (mapController); //having the protect means that we have the middleware between the client request and server answer.

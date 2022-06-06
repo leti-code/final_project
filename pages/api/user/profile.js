@@ -14,6 +14,8 @@ const handler = async (req, res) => {
                 connected: true,
             })
         case "PUT":
+            /*updates the url of the user image in the database
+            return 200 on success and 404 on error (if the user doesn't exist) */
             await db();
             const updatedUser = await User.findByIdAndUpdate(
                 {_id: req.user._id},
