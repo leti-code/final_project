@@ -227,7 +227,7 @@ const register = () => {
         {/*Submit button */}
         <Form.Item {...tailFormItemLayout}>
           {
-            isUpdating ?
+            isCreating ?
             <Button type="primary" htmlType="submit" disabled>
               <Spin indicator={<LoadingOutlined/>}/> 
             </Button>
