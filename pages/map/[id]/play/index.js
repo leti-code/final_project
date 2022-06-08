@@ -7,6 +7,7 @@ import {useRouter} from 'next/router';
 import styles from '../../../../styles/playInit.module.scss';
 import Footer from "@components/Footer";
 import { useSelector } from 'react-redux';
+import ScannerButton from "@components/common/scannerButton";
 
 /*This page uses a dynamic path, we need this function to get the id to complete the path */
 export async function getServerSideProps(context) {
@@ -65,12 +66,15 @@ const Play = ({id}) => {
                 })
                 const {map} = await res.json();
                 if (active_maps.find(singleMap => map._id === singleMap._id) !== undefined)
+                {
                   setHasJoined(true);
+                }
                 setMapInfo(map);
-                setIsLoading(false);
             } catch (er) {
                 openNotification({msg: "Error", description: "This map is not available or you are not authorized"});
                 router.push("/");
+            } finally {
+                setIsLoading(false);
             }
         };
         const newToken = window.localStorage.getItem("byb_token");
@@ -107,6 +111,9 @@ Once you decipher the clue, go to the place it indicates to find the QR code, sc
               :
               <Button type="primary" onClick={setTheGame}>Join this map!</Button>
             }
+            </div>
+            <div className={styles.joinButton}>
+            <ScannerButton/>
             </div>
             </>
             : <Empty />
