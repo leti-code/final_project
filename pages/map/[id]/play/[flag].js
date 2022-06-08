@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import styles from '../../../../styles/playScreen.module.scss';
 import Footer from "@components/Footer";
 import Image from 'next/image';
+import ScannerButton from "@components/common/scannerButton";
 
 
 /*This page uses a dynamic path, we need this function to get the id (of the map) and flag (id of flag) to complete the path */
@@ -167,9 +168,9 @@ const PlayFlag = ({id, flag}) => {
             <div className={styles.nextClue}>
               {hasFinishedMap ? <strong>Congrats!! You have finish!</strong> : <strong>Next clue:</strong>}
               <p>{nextClue}</p>
+              <ScannerButton/>
             </div>
           }
-          <div className="nextClue"></div>
              </>
              : <Empty />
              }

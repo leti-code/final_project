@@ -15,11 +15,13 @@ const ScannerButton = () => {
   return(
     <>
         <Button type="primary" onClick={madeItVisible}>
-          {isVisible ? "Close the camera" : "Open the camera to scan QR"
+          {isVisible ? "Close the camera" : "Open the camera"
           } 
         </Button>
       {
         isVisible &&
+        <>
+        <p>Now search with your camera the QR code, be sure to have good light to be able of scanning it properly</p>
         <QrReader
         constraints={{ facingMode: "environment" }}
         onResult={(result, error) => {
@@ -34,6 +36,7 @@ const ScannerButton = () => {
         }}
         style={{ width: '100%' }}
         />
+        </>
       }
     </>
   );

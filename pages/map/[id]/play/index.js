@@ -98,12 +98,15 @@ const Play = ({id}) => {
     
         <Divider orientation="center">{mapInfo.mapname}</Divider>
         {/*Instructions about how to start the game */}
-        <p className={styles.paragraph}>Here you will find the clue that will take you to the first flag. If you want to play this game you must click on the "Join this map!" button to be registered in your user profile and be able to access the different stops.
-Once you decipher the clue, go to the place it indicates to find the QR code, scan it with any QR scanner application, access the QR link and the first question will appear on your screen.</p>
+        <p className={styles.paragraph}>If you want to play this game you must click on the "Join this map!" to set it on your profile.
+        Here you will find the clue that will take you to the first flag.
+        Decipher it, and go to the place it indicates to find the QR code, 
+        click on "Open the camera" button and scan the QR code
+        </p>
             <div className={styles.cardFirstClue}>
             {mapInfo.firstClue}
             </div>
-            <div className={styles.joinButton}>
+            <div className={styles.otherButton}>
             {
               hasJoined ?
               //Displays a different button depending if the user has already joined the map or not
@@ -112,7 +115,7 @@ Once you decipher the clue, go to the place it indicates to find the QR code, sc
               <Button type="primary" onClick={setTheGame}>Join this map!</Button>
             }
             </div>
-            <div className={styles.joinButton}>
+            <div className={styles.otherButton}>
             <ScannerButton/>
             </div>
             </>
