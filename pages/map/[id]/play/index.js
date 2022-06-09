@@ -45,12 +45,12 @@ const Play = ({id}) => {
         const {error} = json;
         if(error) throw error;
         setHasJoined(true);
-
+        openNotification({msg: "Success", description: "The map has been set on your profile. Now you can start playing it!"});
       } catch (er) {
         openNotification({msg: "Error", description: "There was a problem setting the map on your user. Check if you are connected and logged in"});
+      } finally {
         router.push("/");
-    }
-      setHasJoined(true);
+      }
     };
 
     useEffect(() => { //gets info of map from database to display description and firstClue
