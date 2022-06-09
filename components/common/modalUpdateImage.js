@@ -95,7 +95,7 @@ const Modal_update_image = ({butText, title, preset, setNewImg}) => {
                     <Form.Item
                     name="upload"
                     label="Update picture"
-                    // value={img}
+                    value={img}
                     onChange={(e)=> {
                         setImg(e.target.files[0]);
                         setHasValueChanged(true);
@@ -104,11 +104,11 @@ const Modal_update_image = ({butText, title, preset, setNewImg}) => {
                 >
                     {/*Upload component from Ant Design that allows you to select from your file navigator a file */}
                     <Upload 
-                        // name="image" 
-                        // listType="picture" 
+                        name="image" 
+                        listType="picture" 
                         maxCount={1} 
                         accept=".jpg, .png, .jpeg"
-                        // status={img && "done"}
+                        action={"/api/img"}
                     >
 
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
