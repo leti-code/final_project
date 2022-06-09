@@ -108,6 +108,7 @@ const Modal_update_image = ({butText, title, preset, setNewImg}) => {
                         listType="picture" 
                         maxCount={1} 
                         accept=".jpg, .png, .jpeg"
+                        status={img && "done"}
                     >
 
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
