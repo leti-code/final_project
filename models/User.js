@@ -65,7 +65,7 @@ UserSchema.pre("save", async function (next){
 it's a valid one */
 UserSchema.methods.generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '1d' //we set how long the token will be valid
+    expiresIn: '7d' //we set how long the token will be valid
   });
 }
 
