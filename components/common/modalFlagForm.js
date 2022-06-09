@@ -229,6 +229,7 @@ const Modal_flag_creation_window = ({butText, title, mapId, hasFlagChanged, setH
                         listType="picture" 
                         maxCount={1} 
                         accept=".jpg, .png, .jpeg"
+                        action={"/api/img"}
                     >
                         <Button icon={<UploadOutlined />}>Click to upload</Button>
                     </Upload>

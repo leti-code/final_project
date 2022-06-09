@@ -158,7 +158,7 @@ const createMap = () => {
                     listType="picture" 
                     maxCount={1} 
                     accept=".jpg, .png, .jpeg"
-
+                    action={"/api/img"}
                     >
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
                 </Upload>

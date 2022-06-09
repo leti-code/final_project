@@ -202,6 +202,7 @@ const register = () => {
             listType="picture" 
             maxCount={1}  //you can set the max number of files you can select, in this case we only want one
             accept=".jpg, .png, .jpeg" //you can set the type of files you can select
+            action={"/api/img"} //avoids error on mobiles calling a post service that returns success
             >
               <Button icon={<UploadOutlined />}>Click to upload</Button> {/*we use the icon to display the upload button*/}
           </Upload>
