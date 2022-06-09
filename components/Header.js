@@ -48,7 +48,7 @@ const Header = () => {
 
     /* The DropdownMenu is an a Ant Design graphic component, that displays an image/icon and works as a button and when you hover it, it shows all the menu items */
     const DropdownMenu = () => (
-    <Dropdown key="myMenu" overlay={menu} placement="bottomRight">
+    <Dropdown key="myMenu" overlay={menu} placement="bottomRight" trigger={['click']}>
         <Button type="text" icon={<MenuOutlined  style={{ fontSize: 20 }} />} />
     </Dropdown>
     );
