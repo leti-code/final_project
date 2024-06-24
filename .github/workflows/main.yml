@@ -9,12 +9,12 @@ jobs:
    steps:
      # - uses: super-linter/super-linter@v5.7.2
       #  name: Super-Linter
-#- name: Create package.json
- #      run: npm init
+     - name: npx installation
+       run: npm install npx
      - name: ESlint installation
        run: npm install eslint
      - name: ESlint init
-       run: npm init @eslint/config && y
+       run: npx eslint
 
   # You may pin to the exact commit or the version.
   # uses: super-linter/super-linter@a8150b40c89574adb5f68bf9502b890a236a06b3
