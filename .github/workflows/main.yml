@@ -10,7 +10,7 @@ jobs:
      # - uses: super-linter/super-linter@v5.7.2
       #  name: Super-Linter
      - name: list dir
-       run: ls ../final_project
+       run: ls 
      - name: npx installation
        run: npm install npx
      - name: ESlint installation
