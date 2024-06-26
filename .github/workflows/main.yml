@@ -7,11 +7,11 @@ jobs:
    # software que incluye https://github.com/actions/runner-images/blob/ubuntu22/20240616.1/images/ubuntu/Ubuntu2204-Readme.md
 
    steps:
-     # - uses: super-linter/super-linter@v5.7.2
-      #  name: Super-Linter
      - uses: actions/checkout@v4
-     - name: list dir
-       run: ls 
+     - uses: super-linter/super-linter@v5.7.2
+       name: Super-Linter
+     #- name: list dir
+      # run: ls 
      - name: npx installation
        run: npm install npx
      - name: ESlint installation
