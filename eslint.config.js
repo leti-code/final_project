@@ -1,4 +1,4 @@
-export default {
+module.exports = [{
     env: {
       browser: true,        /* El objetivo del código es ejecutar en navegadores */
       es2021: true          /* El código estará escrito en ECMAScript 2021 */
@@ -17,4 +17,4 @@ export default {
       "quotes": ["error", "double"],
       "semi": ["error", "always"]
     }
-}
+}];
