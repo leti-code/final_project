@@ -9,11 +9,11 @@ jobs:
    steps:
      # - uses: super-linter/super-linter@v5.7.2
       #  name: Super-Linter
-     - name: npx installation
-       run: npm install npx
      - uses: actions/checkout@v4
      - name: list dir
        run: ls 
+     - name: npx installation
+       run: npm install npx
      - name: ESlint installation
        run: npm install eslint
      - name: ESlint init
