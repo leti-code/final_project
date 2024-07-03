@@ -6,6 +6,7 @@ module.exports = [
         rules: { 
           "linebreak-style": ["error", "unix"],
           "semi": ["error", "always"] //especifica que la regla del ; tiene severidad de error
+        }
     },
     {
         ignores: ["**/eslint.config.js"], 
@@ -14,6 +15,7 @@ module.exports = [
           "linebreak-style": ["error", "unix"],
           "quotes": ["warn", "double"],
           "semi": ["error", "always"] 
+        }
     }
 ];
 //docu sobre archivo de configuración: https://eslint.org/docs/latest/use/configure/configuration-files
