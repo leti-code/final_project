@@ -5,19 +5,20 @@ jobs:
  lint:
    runs-on: ubuntu-latest
    # software que incluye https://github.com/actions/runner-images/blob/ubuntu22/20240616.1/images/ubuntu/Ubuntu2204-Readme.md
-   continue-on-error: true ## servirá entre jobs
+   # continue-on-error: true ## servirá entre jobs
    steps:
      - uses: actions/checkout@v4
      - uses: super-linter/super-linter@v5.7.2
        name: Super-Linter 
+       continue-on-error: true
      - name: npx installation
-       if: always()
+       #if: always()
        run: npm install npx
      - name: ESlint installation
-       if: always()
+       #if: always()
        run: npm install eslint
      - name: ESlint init
-       if: always()
+       #if: always()
        run: npx eslint -c ./eslint.config.js
   
 
