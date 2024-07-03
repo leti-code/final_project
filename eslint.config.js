@@ -15,5 +15,5 @@ module.exports = [
           "quotes": ["warn", "double"],
           "semi": ["error", "always"] 
     }
-}];
+];
 //docu sobre archivo de configuración: https://eslint.org/docs/latest/use/configure/configuration-files
