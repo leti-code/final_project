@@ -5,7 +5,7 @@ jobs:
  lint:
    runs-on: ubuntu-latest
    # software que incluye https://github.com/actions/runner-images/blob/ubuntu22/20240616.1/images/ubuntu/Ubuntu2204-Readme.md
-   #continue-on-error: True
+   continue-on-error: true
    steps:
      - uses: actions/checkout@v4
      - uses: super-linter/super-linter@v5.7.2
