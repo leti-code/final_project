@@ -8,11 +8,10 @@ jobs:
 
    steps:
      - uses: actions/checkout@v4
-     # - uses: super-linter/super-linter@v5.7.2
-     #  name: Super-Linter
-     #- name: list dir
-      # run: ls 
+     - uses: super-linter/super-linter@v5.7.2
+       name: Super-Linter 
      - name: npx installation
+       #if: ${{always()}}
        run: npm install npx
      - name: ESlint installation
        run: npm install eslint
