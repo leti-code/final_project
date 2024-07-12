@@ -11,7 +11,7 @@ module.exports = [
     {
         ignores: ["**/eslint.config.js"], 
         rules: { 
-          "indent": ["error", 2],
+          "indent": ["error", 4],
           "linebreak-style": ["error", "unix"],
           "quotes": ["warn", "double"],
           "semi": ["error", "always"] 
