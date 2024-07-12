@@ -67,20 +67,19 @@ const gameController = async (req, res) => {
                         actual_flag: user.actual_flag, 
                     },
                     { new: true });
-
-                }
-                
-                return res.status(201).json({
-                    success: true,
-                    actualFlag: user.actual_flag[posMap],
-                });
-            } catch (er) {
-                console.log(er);
-                return res.status(401).json({
-                    success: false,
-                    error: er.message,
-                });
             }
+                
+            return res.status(201).json({
+                success: true,
+                actualFlag: user.actual_flag[posMap],
+            });
+        } catch (er) {
+            console.log(er);
+            return res.status(401).json({
+                success: false,
+                error: er.message,
+            });
+        }
     default:
         return res.status(405).json({
             success: false,

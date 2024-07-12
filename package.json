@@ -1,28 +1,29 @@
 {
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.8.1",
-    "antd": "^4.19.5",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.29.0",
-    "datauri": "^4.1.0",
-    "file-saver": "^2.0.5",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.11",
-    "next": "latest",
-    "next-pwa": "^5.5.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-qr-reader": "^3.0.0-beta-1",
-    "react-redux": "^7.2.8",
-    "react-router-dom": "^6.3.0",
-    "sass": "^1.50.0",
-    "swr": "^1.0.1",
-    "vercel": "^24.1.0"
-  }
+    "private": true,
+        "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.8.1",
+        "antd": "^4.19.5",
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^1.29.0",
+        "datauri": "^4.1.0",
+        "file-saver": "^2.0.5",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.0.11",
+        "next": "latest",
+        "next-pwa": "^5.5.2",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-qr-reader": "^3.0.0-beta-1",
+        "react-redux": "^7.2.8",
+        "react-router-dom": "^6.3.0",
+        "sass": "^1.50.0",
+        "swr": "^1.0.1",
+        "vercel": "^24.1.0"
+    }
 }
