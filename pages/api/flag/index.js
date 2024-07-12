@@ -8,21 +8,21 @@ const flagController = async (req, res) => {
         /*Updates the information of the flag in the database */
         await db();
         const updatedFlag = await Flag.findByIdAndUpdate(
-            {_id: req.body.id},
-                {
-                    question: req.body.question,
-                    answer: req.body.answer,
-                    correctAnswer: req.body.correctAnswer,
-                    score: req.body.score || 0,
-                    clueToNextFlag: req.body.clueToNextFlag,
-                },
-                {new: true}
-            );
-            if (!updatedFlag) return  res.status(404).json({ success: false, error: "Flag not found" });
-            return res.status(200).json({
-                success: true,
-                updatedFlag
-            });
+        {_id: req.body.id},
+            {
+                question: req.body.question,
+                answer: req.body.answer,
+                correctAnswer: req.body.correctAnswer,
+                score: req.body.score || 0,
+                clueToNextFlag: req.body.clueToNextFlag,
+            },
+            {new: true}
+        );
+        if (!updatedFlag) return  res.status(404).json({ success: false, error: "Flag not found" });
+        return res.status(200).json({
+            success: true,
+            updatedFlag
+        });
     case "PATCH":
         /*Updates the image of the flag in the database */
         await db();
@@ -31,12 +31,13 @@ const flagController = async (req, res) => {
             {
                 img: req.body.img,
             },
-            {new: true});
-            if (!updatedFlag2) return  res.status(404).json({ success: false, error: "Flag not found" });
-            return res.status(200).json({
-                success: true,
-                updatedFlag2
-            });
+            {new: true}
+        );
+        if (!updatedFlag2) return  res.status(404).json({ success: false, error: "Flag not found" });
+        return res.status(200).json({
+            success: true,
+            updatedFlag2
+        });
     case "POST":
         /*Adds a new flag to the database */
         try {

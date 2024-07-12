@@ -30,7 +30,7 @@ const MapSchema = new mongoose.Schema({
         //In this case, we indicate here that owner is variable that contents an ObjectId (single identificator of a mongo document) of the user
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-       required: [true, "Please provide an owner."]
+        required: [true, "Please provide an owner."]
     },
     img: {
         type: String

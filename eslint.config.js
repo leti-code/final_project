@@ -9,6 +9,10 @@ module.exports = [
         }
     },
     {
+        languageOptions: {
+            ecmaVersion: 6,
+            sourceType: "script"
+        },
         ignores: ["**/eslint.config.js"], 
         rules: { 
           "indent": ["error", 4],

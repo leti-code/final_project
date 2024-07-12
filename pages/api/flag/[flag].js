@@ -15,7 +15,7 @@ const singleFlagController = async (req, res) => {
             success: true,
             singleFlag
         });
-        case "PUT":
+    case "PUT":
         //Once the user select a possible answer, checks if it is correct or not and if this user has already hit it before
         //Also updated the user score in case of a correct answer
         await db();
@@ -69,6 +69,6 @@ const singleFlagController = async (req, res) => {
             error: ["Method not allowed."],
         });
     }
-}
+};
 
 export default protect (singleFlagController); //having the protect means that we have the middleware between the client request and server answer.
