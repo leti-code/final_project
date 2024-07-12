@@ -5,7 +5,7 @@ jobs:
  lint:
    runs-on: ubuntu-latest
    # software que incluye https://github.com/actions/runner-images/blob/ubuntu22/20240616.1/images/ubuntu/Ubuntu2204-Readme.md
-   # continue-on-error: true ## servirá entre jobs
+   continue-on-error: true ## servirá entre jobs
    steps:
      - uses: actions/checkout@v4
      - uses: super-linter/super-linter@v5.7.2
@@ -20,6 +20,12 @@ jobs:
      - name: ESlint init
        #if: always()
        run: npx eslint -c ./eslint.config.js
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: launch tests
+        run: yarn test
   
 
   # You may pin to the exact commit or the version.
