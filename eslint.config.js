@@ -4,8 +4,8 @@ module.exports = [
         ignores: ["**/eslint.config.js"], //ignora el archivo de configuración del linting a la hora de evaluarlo
         files: ["**/*.ts"], //por defecto analiza files con extensión .js .cjs y .mjs, así incluimos que analice los archivos typescript
         rules: { 
-          "linebreak-style": ["error", "unix"],
-          "semi": ["error", "always"] //especifica que la regla del ; tiene severidad de error
+            "linebreak-style": ["error", "unix"],
+            "semi": ["error", "always"] //especifica que la regla del ; tiene severidad de error
         }
     },
     {
