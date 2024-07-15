@@ -20,12 +20,12 @@ jobs:
      - name: ESlint init
        #if: always()
        run: npx eslint -c ./eslint.config.js
-  testing:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: launch tests
-        run: yarn test
+ testing:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v4
+   - name: launch tests
+     run: yarn test
   
 
   # You may pin to the exact commit or the version.
