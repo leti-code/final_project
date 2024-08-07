@@ -28,6 +28,21 @@ jobs:
      run: yarn
    - name: launch tests
      run: yarn test
+ deploy:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v4
+   - name: 'npm install, build, and test'
+     run: |
+      yarn
+      yarn build --if-present
+      yarn test
+
+   - name: 'Run Azure webapp deploy action using publish profile credentials'
+     uses: azure/webapps-deploy@v2
+     with:
+       app-name: node-rn
+       publish-profile: ${{ secrets.azureWebAppPublishProfile }}
   
 
   # You may pin to the exact commit or the version.
