@@ -1,6 +1,8 @@
 name: Build and test of Java Project
 on: push
-
+env:
+  AZURE_WEBAPP_NAME: final-project-app   
+  AZURE_WEBAPP_PACKAGE_PATH: '.next'
 jobs:
  lint:
    runs-on: ubuntu-latest
@@ -37,12 +39,18 @@ jobs:
       yarn
       yarn build
       yarn test
+   - name: Upload build artifacts
+     uses: actions/upload-artifact@v2
+     with:
+      name: nextjs-build
+      path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
    - name: 'Run Azure webapp deploy action using publish profile credentials'
      uses: azure/webapps-deploy@v2
      with:
-       app-name: final-project-app
+       app-name: ${{ env.AZURE_WEBAPP_NAME }}
        publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+       package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   
 
   # You may pin to the exact commit or the version.
