@@ -34,11 +34,12 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - uses: actions/checkout@v4
-   - name: 'npm install, build, and test'
-     run: |
-      yarn
-      yarn build
-      yarn test
+   - name: 'Install dependencies'
+     run: yarn
+   - name: 'Build the application'
+     run: yarn build
+   - name: 'Run tests'
+     run: yarn test
    - name: Prepare deployment package
      run: |
       mkdir -p deploy
@@ -48,6 +49,7 @@ jobs:
       cp -r node_modules deploy/
       cp -r next.config.js deploy/
       cp -r yarn.lock deploy/
+      echo "web: next start -p $PORT" > deploy/Procfile # Azure usa el archivo Procfile para saber cómo iniciar la app
   
 
    - name: 'Run Azure webapp deploy action using publish profile credentials'
