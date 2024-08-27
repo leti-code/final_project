@@ -46,6 +46,8 @@ jobs:
       cp -r public deploy/
       cp package.json deploy/
       cp -r node_modules deploy/
+      cp -r next.config.js deploy/
+      cp -r yarn.lock deploy/
   
 
    - name: 'Run Azure webapp deploy action using publish profile credentials'
