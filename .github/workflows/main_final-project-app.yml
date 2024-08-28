@@ -56,7 +56,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'final-project-app'
-          slot-name: 'Production'
+          app-name: 'final-project-app' 
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F3077003C25F41B0BF62DA67BC47BA74 }}
